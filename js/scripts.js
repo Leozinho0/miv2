@@ -57,23 +57,19 @@ function js_listTables(obj){
 	}
 }
 function js_insert(){
-	//APAGAR ISSO
-	var quantidade = document.getElementById("qtd_insert").value;
-	var debug = document.getElementById("debug").checked;
-	//APAGAR ESSA MERDS
-
+	ajax_insert_show();
 	var d = 'sgbd=' + document.getElementById("conn_sgbd").value + '&adress=' + document.getElementById("conn_adress").value + '&user=' + document.getElementById("conn_user").value + '&password=' + document.getElementById("conn_password").value + "&base=" + document.getElementById("id_bases").value + "&table=" + document.getElementById("id_tables").value + "&qtd=" + document.getElementById("qtd_insert").value +"&id=4";
-	$('#div_message').hide();
-	$('#div_error').hide();
+	$('.div_message').hide();
+	$('.div_error').hide();
 	$('#div_block').show();
-	$('#div_loading').fadeIn();
+	$('.div_loading').fadeIn();
 	$.ajax({
 		type: 'POST',
 		url: 'conn_valida.php',
 		data: d,
 		success: function(ds){
 			$('#div_block').hide();
-			$('#div_loading').hide();
+			$('.div_loading').hide();
 			var mensagem = quantidade + " registro(s) inserido(s) com sucesso!";
 			//1.Ds retorna um objeto JSON. Fazer um JSON.parse
 			//2.Verificação do retorno ds. Pode ser um erro ds.[0] -> erro!
@@ -86,19 +82,19 @@ function js_insert(){
 				//else->Erro->Mostra o info do erro
 				if(arr[0] == ''){
 					if(debug){
-						$('#div_message').html(arr);
-						$('#div_message').fadeIn();
+						$('.div_message').html(arr);
+						$('.div_message').fadeIn();
 					}else{
-						$('#div_message').html(mensagem);
-						$('#div_message').fadeIn();
+						$('.div_message').html(mensagem);
+						$('.div_message').fadeIn();
 					}	
 				}else if(arr[0] == 'ERRO!<br>'){
-					$('#div_error').html(arr[1]);
-					$('#div_error').fadeIn();
+					$('.div_error').html(arr[1]);
+					$('.div_error').fadeIn();
 				}
 			}catch(e){
-				$('#div_error').html(ds);
-				$('#div_error').fadeIn();
+				$('.div_error').html(ds);
+				$('.div_error').fadeIn();
 			}
 		}
 	});
@@ -116,8 +112,8 @@ function js_conn(){
 				var home_redirect = "home.php?address=" + address;
 				window.location = home_redirect;
 			}else {
-				$('#div_error').html(ds);
-				$('#div_error').fadeIn();
+				$('.div_error').html(ds);
+				$('.div_error').fadeIn();
 			}
 		}
 	});
@@ -192,9 +188,15 @@ function load_page_content(id_load, database, table){
 }
 
 function ajax_loading_show(){
-	$('.ajax_main_loading').show();
+	$('.ajax_main_loading').fadeIn();
 }
 
 function ajax_loading_hide(){
 	$('.ajax_main_loading').hide();
+}
+
+function ajax_insert_show(){
+	$('.div_message').hide();
+	$('.div_error').hide();
+	$('.ajax_main_loading').fadeIn();
 }

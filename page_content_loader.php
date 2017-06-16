@@ -44,7 +44,10 @@ if(isset($_GET['pc_load'])){
 							</div>
 							<div>
 								<button>Resetar</button>
-								<button>Inserir</button>
+								<button onclick="js_insert();">Inserir</button>
+							</div>
+							<div class="div_message">
+								
 							</div>
 						</div>
 				</div>
