@@ -1,0 +1,17 @@
+.pc_sql{
+    background-color: #ECF0F1;
+    width: 600px;
+    text-align: center;
+    border-radius: 5px;
+    float: left;
+}
+.pc_sql > h2, .pc_sql > h4{
+    color: grey;
+    text-align: left;
+}
+.pc_sql > textarea{
+
+}
+.pc_sql > div{
+    padding: 10px 0 10px 0;
+}
