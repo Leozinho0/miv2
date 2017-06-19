@@ -65,7 +65,7 @@
 			</table>
 		</div>
 		<div onclick="js_conn();" class="div_btn" id="button_connect">
-			<span onclick="togle();">Conectar</span>
+			<span>Conectar</span>
 		</div>
 	</div>
 	<!--Div LOADING AJAX-->
@@ -135,7 +135,7 @@
 		<span>Inserindo dados... Aguarde...</span>
 	</div>
 	<!--Div ERRORS -->
-	<div style="display:none;" id="div_error" class="box_error">
+	<div style="display:none;" class="box_error">
 	</div>
 </body>
 </html>

@@ -41,7 +41,7 @@ function js_listTables(obj){
 				try{
 					arr = JSON.parse(ds);
 					$(obj.parentNode).append("<ul class='ul_tables'>");
-					$(obj.parentNode.getElementsByTagName('ul')[0]).append('<input type="checkbox" /> Selecionar Todas');
+					$(obj.parentNode.getElementsByTagName('ul')[0]).append('<input type="checkbox" onclick="togle_selectAll(this);" /> Selecionar Todas');
 					for(it=0; it<arr.length; it++)
 					{
 						$(obj.parentNode.getElementsByTagName('ul')[0]).append("<li class='li_tables'>" + '<input type="checkbox" />' + '<a href="#" onclick="load_page_content(\'pc_massive_insert\', this.parentNode.parentNode.parentNode.title, this.parentNode.innerText); return false; "><img src="img/pmahomme/img/b_edit.png" name= "icon_table_edit" alt="" width=15px style="padding-right: 5px;" > </a>' + arr[it][0] + "</li>");
@@ -112,8 +112,8 @@ function js_conn(){
 				var home_redirect = "home.php?address=" + address;
 				window.location = home_redirect;
 			}else {
-				$('.div_error').html(ds);
-				$('.div_error').fadeIn();
+				$('.box_error').html(ds);
+				$('.box_error').fadeIn();
 			}
 		}
 	});
@@ -199,4 +199,12 @@ function ajax_insert_show(){
 	$('.div_message').hide();
 	$('.div_error').hide();
 	$('.ajax_main_loading').fadeIn();
+}
+//EventListenersJquery
+function togle_selectAll(checkbox){
+	if(checkbox.checked){
+		$(checkbox).parent().children('li').children('input').prop("checked", true);
+	}else{
+		$(checkbox).parent().children('li').children('input').prop("checked", false);
+	}
 }

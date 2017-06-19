@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+
 //Includes
 require_once 'class/conn.class.php';
 require_once 'html_functions.php';
@@ -28,6 +30,7 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
                 background-color: #ECF0F1;
                 color: black;
                 font-family: "Arial Rounded MT Bold", "Sans-serif";
+                overflow-y: hidden;
             }
             .left_container{
                 //background-color: blue;
@@ -39,6 +42,7 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
                 //background-color: purple;
                 height: 100%;
                 float: left;
+                width: calc(100% - 300px);
             }
             #header_left_container{
                 //background-color: red;
@@ -66,7 +70,7 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
             }
             .header_left_container_toolbar li{
                 //background-color: green;
-                display: inline-grid;
+                display: inline-block;
             }
             #header_right_container{
                 //background-color: grey;
@@ -110,6 +114,12 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
                  padding: 0;
                  margin-left: 15px;
             }
+            .li_tables{
+                margin-left: 1em;
+            }
+            .li_tables a{
+                display: inline-block;
+            }
             .TESTE{
                 width: 500px;
                 border: 1px solid #D1D5D8;
@@ -135,13 +145,12 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
                 height: 100%;
                 position: absolute;
                 width: 100%;
-                vertical-align: middle;
             }
             .ajax_main_loading img{
-                vertical-align: middle;
-                width: 100px;
-                margin-top: 300px;
+                width: 80px;
                 opacity: 1;
+                position: relative;
+                top: 40%;
             }
             .default_links{
 
@@ -153,8 +162,8 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
         <link rel="stylesheet" href="css/pc_sql.css">
         <link rel="stylesheet" href="css/pc_massive_insert.css">
 
-        <script src="js/scripts.js"></script>
         <script src="js/jquery.js"></script>
+        <script src="js/scripts.js"></script>
     </head>
     <body>
         <div class="ajax_main_loading">
