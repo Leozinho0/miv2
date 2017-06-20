@@ -59,11 +59,19 @@ else if(isset($_POST['id']) && isset($_POST['base']) && $_POST['id'] == 3){
 }
 //
 //Massive Insert
-else if(isset($_POST['id']) && isset($_POST['base']) && isset($_POST['table']) && $_POST['id'] == 4){
-	$conn = new Conn($_POST['sgbd'], $_POST['adress'], $_POST['user'], $_POST['password']);
+//Tem que validar um try catch aqui, essas sessões podem estar vazias (timeout)
+else if(isset($_POST['id']) && isset($_POST['base']) && isset($_POST['table']) && isset($_POST['address']) && $_POST['id'] == 4){
+	$conn = new Conn('mysql', $_POST['address'], $_SESSION['conn'][$_POST['address']]['usr'], $_SESSION['conn'][$_POST['address']]['psw']);
 	if($conn->useDatabase($_POST['base'])){
 		//CREATE HERE INSERT INTO
-		$conn->massiveInsert($_POST['table'], $_POST['qtd']);
+
+		//foreach pra inserir em cada tabela
+		$table = explode(",", $_POST['table']);
+		die;
+		foreach($table as $key){
+			$conn->massiveInsert($key, $_POST['qtd']);
+		}
+		
 	}
 }
 else if(isset($_POST['id']) && $_POST['id'] == 5){

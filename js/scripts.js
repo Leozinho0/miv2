@@ -56,17 +56,27 @@ function js_listTables(obj){
 		});
 	}
 }
-function js_insert(){
+function js_insert(obj){
+	//var address = obj.parentNode.parentNode.getElementById("conn_address").innerText;
+	var address = document.getElementById("conn_address").innerText;
+	var base = document.getElementById("conn_currentBase").innerText;
+	//var table = document.getElementById("mi_table").innerText;
+	var qtd = document.getElementById("mi_qtd").value;
+	console.log(qtd)
 	ajax_insert_show();
-	var d = 'sgbd=' + document.getElementById("conn_sgbd").value + '&adress=' + document.getElementById("conn_adress").value + '&user=' + document.getElementById("conn_user").value + '&password=' + document.getElementById("conn_password").value + "&base=" + document.getElementById("id_bases").value + "&table=" + document.getElementById("id_tables").value + "&qtd=" + document.getElementById("qtd_insert").value +"&id=4";
+	//var d = 'sgbd=' + document.getElementById("conn_sgbd").value + '&adress=' + document.getElementById("conn_adress").value + '&user=' + document.getElementById("conn_user").value + '&password=' + document.getElementById("conn_password").value + "&base=" + document.getElementById("id_bases").value + "&table=" + document.getElementById("id_tables").value + "&qtd=" + document.getElementById("qtd_insert").value +"&id=4";
+	
 	$('.div_message').hide();
 	$('.div_error').hide();
 	$('#div_block').show();
 	$('.div_loading').fadeIn();
+
+	var dataset = "adress=127.0.0.1" + address+ "&base=" + base + "&table=" + table + "&qtd=" + qtd + "&id=4";
+
 	$.ajax({
 		type: 'POST',
 		url: 'conn_valida.php',
-		data: d,
+		data: dataset,
 		success: function(ds){
 			$('#div_block').hide();
 			$('.div_loading').hide();
