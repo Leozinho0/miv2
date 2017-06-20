@@ -67,11 +67,9 @@ else if(isset($_POST['id']) && isset($_POST['base']) && isset($_POST['table']) &
 
 		//foreach pra inserir em cada tabela
 		$table = explode(",", $_POST['table']);
-		die;
 		foreach($table as $key){
 			$conn->massiveInsert($key, $_POST['qtd']);
 		}
-		
 	}
 }
 else if(isset($_POST['id']) && $_POST['id'] == 5){

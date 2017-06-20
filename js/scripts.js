@@ -60,10 +60,16 @@ function js_insert(obj){
 	//var address = obj.parentNode.parentNode.getElementById("conn_address").innerText;
 	var address = document.getElementById("conn_address").innerText;
 	var base = document.getElementById("conn_currentBase").innerText;
-	//var table = document.getElementById("mi_table").innerText;
+	//
+	var table = [];
+	var tableObj = obj.parentNode.parentNode.getElementsByClassName('mi_tables');
+	for(var i = 0; i < tableObj.length; i++){
+		table.push(tableObj[i].innerText);
+	}
+	//
 	var qtd = document.getElementById("mi_qtd").value;
-	console.log(qtd)
-	ajax_insert_show();
+
+	//ajax_insert_show();
 	//var d = 'sgbd=' + document.getElementById("conn_sgbd").value + '&adress=' + document.getElementById("conn_adress").value + '&user=' + document.getElementById("conn_user").value + '&password=' + document.getElementById("conn_password").value + "&base=" + document.getElementById("id_bases").value + "&table=" + document.getElementById("id_tables").value + "&qtd=" + document.getElementById("qtd_insert").value +"&id=4";
 	
 	$('.div_message').hide();
@@ -71,16 +77,17 @@ function js_insert(obj){
 	$('#div_block').show();
 	$('.div_loading').fadeIn();
 
-	var dataset = "adress=127.0.0.1" + address+ "&base=" + base + "&table=" + table + "&qtd=" + qtd + "&id=4";
+	var dataset = "address=" + address+ "&base=" + base + "&table=" + table + "&qtd=" + qtd + "&id=4";
 
 	$.ajax({
 		type: 'POST',
 		url: 'conn_valida.php',
 		data: dataset,
 		success: function(ds){
+			/*
 			$('#div_block').hide();
 			$('.div_loading').hide();
-			var mensagem = quantidade + " registro(s) inserido(s) com sucesso!";
+			var mensagem =  "registro(s) inserido(s) com sucesso!";
 			//1.Ds retorna um objeto JSON. Fazer um JSON.parse
 			//2.Verificação do retorno ds. Pode ser um erro ds.[0] -> erro!
 			
@@ -105,7 +112,7 @@ function js_insert(obj){
 			}catch(e){
 				$('.div_error').html(ds);
 				$('.div_error').fadeIn();
-			}
+			}*/alert(ds);
 		}
 	});
 }

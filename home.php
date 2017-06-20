@@ -21,7 +21,7 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Home</title>
+        <title>Database Populator - Home</title>
         <style>
             body, html{
                 margin: 0;
