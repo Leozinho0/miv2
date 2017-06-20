@@ -162,40 +162,35 @@ session_start();
 </html>
 
 -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-
-        <script src="js/jquery.js"></script>
 	<style>
-		.div{
-			width: 1%;
-			background: -moz-linear-gradient(right, red, yellow);
+		div{
+			background-color: grey;
+			margin: 50px 0;
+		}
+		h2{
+			background-color: green;
+			margin: 0;
+			margin-top: 10px;
+		}
+		span{
+			background-color: red;
 		}
 	</style>
 </head>
 <body>
-	
 	<div>
-			<div class="div" style="background-color: red; float: left;">
-				LALA
-			</div>
-			<div>
-				85%
-			</div>
+		Leo
 	</div>
-	<script>
-			$(document).ready(function(){
-				$(".div").animate({
-			        left: '250px',
-			        width: '+=800px'
-			    }, 1000);
-			});
-
-	</script>
+	<h2>
+		Tittle
+	</h2>
+	<span>
+		Body
+	</span>
 </body>
 </html>

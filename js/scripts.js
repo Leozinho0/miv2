@@ -41,10 +41,10 @@ function js_listTables(obj){
 				try{
 					arr = JSON.parse(ds);
 					$(obj.parentNode).append("<ul class='ul_tables'>");
-					$(obj.parentNode.getElementsByTagName('ul')[0]).append('<input type="checkbox" onclick="togle_selectAll(this);" /> Selecionar Todas');
+					$(obj.parentNode.getElementsByTagName('ul')[0]).append('<input type="checkbox" title="checkbox_selectAll" onclick="toggle_checkboxAll(this);"/> Selecionar Todas');
 					for(it=0; it<arr.length; it++)
 					{
-						$(obj.parentNode.getElementsByTagName('ul')[0]).append("<li class='li_tables'>" + '<input type="checkbox" />' + '<a href="#" onclick="load_page_content(\'pc_massive_insert\', this.parentNode.parentNode.parentNode.title, this.parentNode.innerText); return false; "><img src="img/pmahomme/img/b_edit.png" name= "icon_table_edit" alt="" width=15px style="padding-right: 5px;" > </a>' + arr[it][0] + "</li>");
+						$(obj.parentNode.getElementsByTagName('ul')[0]).append("<li class='li_tables'>" + '<input type="checkbox" />' + '<a href="#" onclick="load_page_content(\'pc_massive_insert\', this.parentNode.parentNode.parentNode.title, this); return false; "><img src="img/pmahomme/img/b_edit.png" name= "icon_table_edit" alt="" width=15px style="padding-right: 5px;" > </a>' + arr[it][0] + "</li>");
 					}
 					$(obj.parentNode).append("</ul>");
 					$('#div_tabelas').show();
@@ -174,11 +174,20 @@ function load_page_content(id_content){
 */
 function load_page_content(id_load, database, table){
 	ajax_loading_show();
-	console.log(database);
+
+	//GetArrayWithTablesNames
+	var tableName = [];
+	table = table.parentNode.parentNode.getElementsByTagName('li');
+	for(var i = 0; i < table.length; i++){
+		if($(table[i]).children('input').prop("checked")){
+			tableName.push(table[i].innerText);
+		}
+	}
+
 	$.ajax({
 		url: 'page_content_loader.php',
 		type: 'GET',
-		data: 'pc_load=' + id_load + '&database=' + database + '&table=' + table,
+		data: 'pc_load=' + id_load + '&database=' + database + '&table=' + tableName,
 		success: function(ds){
 			$('#body_right_container').html(ds);
 			ajax_loading_hide();
@@ -201,10 +210,19 @@ function ajax_insert_show(){
 	$('.ajax_main_loading').fadeIn();
 }
 //EventListenersJquery
-function togle_selectAll(checkbox){
+function toggle_checkboxAll(checkbox){
 	if(checkbox.checked){
 		$(checkbox).parent().children('li').children('input').prop("checked", true);
 	}else{
 		$(checkbox).parent().children('li').children('input').prop("checked", false);
 	}
 }
+
+//EventHandlers - INCOMPLETO
+/*
+$(document).ready(function() {
+	$("input[title='checkbox_selectAll']").click(function() {
+		toggle_checkboxAll(this);
+	});
+});
+*/
