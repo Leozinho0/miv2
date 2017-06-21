@@ -1,6 +1,5 @@
 .pc_ms_right{
-	float: left;
-	width: 585px;
+	min-width: 500px;
 	overflow-x: auto;
 }
 .pc_ms_right > table tr:nth-child(odd){
@@ -16,6 +15,8 @@
     border-radius: 5px;
 	margin: 5px;
 	padding: 10px;
+	border: 1px solid #95A5A6;
+	box-shadow: 3px 4px 10px #95A5A6;
 }
 .pc_ms_left > h3, .pc_ms_left > h4, .pc_ms_right h3, .pc_ms_right h4{
     color: grey;

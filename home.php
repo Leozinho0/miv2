@@ -23,13 +23,37 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Database Populator - Home</title>
         <style>
+            @font-face{
+                font-family: "openSans";
+                src: URL("fonts/openSans/OpenSans-Regular.ttf");
+                font-style: normal;
+                font-weight: normal;
+            }
+            @font-face{
+                font-family: "openSans";
+                src: URL("fonts/openSans/OpenSans-Bold.ttf");
+                font-style: normal;
+                font-weight: bold;
+            }            
+            @font-face{
+                font-family: "openSans";
+                src: URL("fonts/openSans/OpenSans-Italic.ttf");
+                font-style: italic;
+                font-weight: normal;
+            }            
+            @font-face{
+                font-family: "openSans";
+                src: URL("fonts/openSans/OpenSans-BoldItalic.ttf");
+                font-style: italic;
+                font-weight: bold;
+            }
             body, html{
                 margin: 0;
                 padding: 0;
                 height: 100%;
                 background-color: #ECF0F1;
                 color: black;
-                font-family: "Arial Rounded MT Bold", "Sans-serif";
+                font-family: "openSans";
                 overflow-y: hidden;
             }
             .left_container{
@@ -55,7 +79,6 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
                 font-size: 20px;
                 font-weight: bolder;
                 text-shadow: 1px 1px 10px #000;
-                font-family: "Arial Rounded MT Bold", "Sans-serif";
                 padding: 5px;
 
             }
@@ -76,20 +99,20 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
                 //background-color: grey;
                 width: 100%;
                 height: 70px;
+                overflow-y: hidden;
             }
             #header_right_container_utoolbar{
                 background-color: #D1D5D8;
             }
             .header_right_container_ltoolbar{
                 //background-color: yellow;
-                height: 100%;
             }
             .header_right_container_ltoolbar ul{
                 margin: 0px;
                 padding: 0px;
             }
             .header_right_container_ltoolbar li{
-                display: inline-grid;
+                display: inline-block;
                 padding: 15px;
                 //background-color: #F0F0F0;
                 border-right: 2px solid white;
@@ -106,7 +129,7 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
             }
             #body_right_container{
                 background-color: white;
-                height: 650px;
+                height: calc(100% - 70px);
                 overflow-y: scroll;
             }
             .ul_tables{
@@ -132,7 +155,6 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
             .header_right_container_ltoolbar a{
                 text-decoration: none;
                 color: grey;
-                font-family: "Arial Rounded MT Bold", "Sans-serif";
                 font-weight: bolder;
                 //text-shadow: 1px 1px 10px #000;
             }
@@ -156,7 +178,7 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
 
             }
             .database_ul li:hover{
-                //background-color: grey;
+                background-color: #D1D5D8;
             }
         </style>
         <link rel="stylesheet" href="css/pc_sql.css">
