@@ -54,7 +54,6 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
                 background-color: #ECF0F1;
                 color: black;
                 font-family: "openSans";
-                overflow-y: hidden;
             }
             .left_container{
                 //background-color: blue;
@@ -65,8 +64,6 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
             .right_container{
                 //background-color: purple;
                 height: 100%;
-                float: left;
-                width: calc(100% - 300px);
             }
             #header_left_container{
                 //background-color: red;
@@ -97,7 +94,6 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
             }
             #header_right_container{
                 //background-color: grey;
-                width: 100%;
                 height: 70px;
                 overflow-y: hidden;
             }
@@ -240,6 +236,8 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
                 <?php html_databases($arr_databases); ?>
             </div>
         </div>
+        <!-- DRAG BAR TEST -->
+        <!-- DRAG BAR TEST -->
         <div class="right_container">
             <div id="header_right_container">
                 <div id="header_right_container_utoolbar">

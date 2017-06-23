@@ -235,11 +235,17 @@ function toggle_checkboxAll(checkbox){
 	}
 }
 
-//EventHandlers - INCOMPLETO
-/*
-$(document).ready(function() {
-	$("input[title='checkbox_selectAll']").click(function() {
-		toggle_checkboxAll(this);
+//Slider - Incompleto
+
+$(document).ready(function(){
+	$('.slider').on('mousedown',function(e){
+		$('.column').on('mousemove',function(e){
+			diff = $('.slider').offset().top + 5 - e.pageY ;
+			$('.top').height($('.top').height()-diff);
+			$('.bot').height($('.bot').height()+diff);
+		});
+	});
+	$('.column').on('mouseup',function(){
+		$('.column').off('mousemove');
 	});
 });
-*/
