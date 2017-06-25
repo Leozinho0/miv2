@@ -4,7 +4,7 @@
 ##Paramentes passed: SGBD(mysql), address, user, password 
 ##
 ## TINYBLOB, BLOB, MEDIUMBLOB, and LONGBLOB NOT DEFINED YET
-class Conn{
+class Conn extends PDO{
 ##Conection Variables
 	private $conn_sgbd;
 	private $conn_address;
@@ -172,6 +172,17 @@ class Conn{
 			$arr_retorno[] = $key;
 		}
 		return $arr_retorno;
+	}
+
+	public function select($statement){
+		$arr_retorno = array();
+		if($rs = $this->conn_obj->query($statement, PDO::FETCH_ASSOC)){
+			foreach($rs as $key)
+			{
+				$arr_retorno[] = $key;
+			}
+			return $arr_retorno;
+		}
 	}
 
 	public function massiveInsert($table, $qtd=1){

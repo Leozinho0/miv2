@@ -5,6 +5,11 @@
 .pc_ms_right > table tr:nth-child(odd){
 	background-color: white;
 }
+.pc_ms_right > div{
+    padding: 10px 0 10px 0;
+    margin: 10px;
+    border-top: 2px solid white;
+}
 .pc_ms_left{
     width: 400px;
     float: left;
@@ -13,20 +18,30 @@
 	background-color: #ECF0F1;
     text-align: left;
     border-radius: 5px;
-	margin: 5px;
-	padding: 10px;
+	margin: 0 15px 15px 0;
 	border: 1px solid #95A5A6;
 	box-shadow: 3px 4px 10px #95A5A6;
 }
-.pc_ms_left > h3, .pc_ms_left > h4, .pc_ms_right h3, .pc_ms_right h4{
-    color: grey;
-    text-align: left;
+.pc_default_container_navigation{
+	text-align: center;
 }
-.pc_ms_left > textarea{
-
+.pc_default_container_navigation > div{
+	display: inline-block;
+	width: 30%;
+}
+.pc_default_container_title{
+	background-color: #D1D5D8;
+	text-align: center;
+	margin: 0;
+	color: grey;
+	padding: 3px;
+}
+.pc_ms_left h4{
+    padding: 0 10px;
 }
 .pc_ms_left > div{
     padding: 10px 0 10px 0;
+    margin: 10px;
     border-top: 2px solid white;
 
 }
@@ -34,7 +49,21 @@
 	border-right: 2px solid black;
 	padding-right: 5px;
 }
+.pc_default_container_table{
+	overflow-x: auto;
+}
 .pc_ms_left .pc_ms_left_listTables div:nth-child(odd){
 	background-color: white;
 	border-radius: 5px;
+}
+#pc_mi_table{
+	border: 1px solid;
+	border-collapse: collapse;
+}
+#pc_mi_table td{
+	border: 1px solid grey;
+	padding: 3px;
+}
+#pc_mi_table tr:nth-child(odd){
+	background-color: white;
 }

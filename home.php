@@ -54,6 +54,7 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
                 background-color: #ECF0F1;
                 color: black;
                 font-family: "openSans";
+                font-size: .90em;
             }
             .left_container{
                 //background-color: blue;
@@ -98,7 +99,8 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
                 overflow-y: hidden;
             }
             #header_right_container_utoolbar{
-                background-color: #D1D5D8;
+                background-color: grey;
+                color: white;
             }
             .header_right_container_ltoolbar{
                 //background-color: yellow;
@@ -113,20 +115,28 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
                 //background-color: #F0F0F0;
                 border-right: 2px solid white;
             }
-            .header_right_container_ltoolbar li:hover, .header_right_container_ltoolbar a:hover{
-                background-color: #D1D5D8;
-                //color: #ECF0F1;
+            .header_right_container_ltoolbar li:hover{
+                background-color: grey;
+                color: white;
+            }
+            .lc_dragbar{
+                height: 100%;
+                background-color: grey;
+                width: 3px;
+                float: left;
+                cursor: pointer;
             }
             #body_left_container{
                 //background-color: yellow;
                 height: calc(100% - 71px);
-                overflow-y: scroll;
+                overflow-y: auto;
                 white-space: nowrap;
             }
             #body_right_container{
                 background-color: white;
-                height: calc(100% - 70px);
-                overflow-y: scroll;
+                height: calc(100% - 90px);
+                padding: 10px;
+                overflow-y: auto;
             }
             .ul_tables{
                  list-style: none;
@@ -237,6 +247,8 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
             </div>
         </div>
         <!-- DRAG BAR TEST -->
+        <div class="lc_dragbar" onclick="div_RightToLeftCollapse('#teste_leo');">
+        </div>
         <!-- DRAG BAR TEST -->
         <div class="right_container">
             <div id="header_right_container">
@@ -253,48 +265,49 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
                 </div>
                 <div class="header_right_container_ltoolbar">
                     <ul>
-                        <li>
-                            <a href="javascript: load_page_content('pc_massive_insert');">
+                        <a href="javascript: load_page_content('pc_massive_insert');">
+                            <li>
                                 <img src="img/pmahomme/img/s_db.png" alt="">
                                 Inserir Registros
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript: load_page_content('pc_sql');">
+                                
+                            </li>
+                        </a>
+                        <a href="javascript: load_page_content('pc_sql');">
+                            <li>                            
                                 <img src="img/pmahomme/img/b_sql.png" alt="">
                                 SQL
-                            </a>                            
-                        </li>
-                        <li>
-                            <a href="javascript: load_page_content('');">
+                            </li>
+                        </a>
+                        <a href="javascript: load_page_content('');">
+                            <li>
                                 <img src="img/pmahomme/img/b_import.png" alt="">
                                 Importar
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript: load_page_content('');">
+                            </li>
+                        </a>
+                        <a href="javascript: load_page_content('');">
+                            <li>
                                 <img src="img/pmahomme/img/b_export.png" alt="">
                                 Exportar
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript: load_page_content('');">
+                            </li>
+                        </a>
+                        <a href="javascript: load_page_content('');">
+                            <li>
                                 <img src="img/pmahomme/img/s_rights.png" alt="">
                                 Configurações de Usuário
-                            </a>                            
-                        </li>
-                        <li>
-                            <a href="javascript: load_page_content('');">
+                            </li>
+                        </a>
+                        <a href="javascript: load_page_content('');">
+                            <li>
                                 <img src="img/pmahomme/img/s_process.png" alt="">
                                 Ajustes Gerais
-                            </a>                            
-                        </li>
-                        <li>
-                            <a href="javascript: load_page_content('');">
+                            </li>
+                        </a>
+                        <a href="javascript: load_page_content('');">
+                            <li>
                                 <img src="img/pmahomme/img/s_info.png" alt="">
                                 Sobre
-                            </a>                            
-                        </li>
+                            </li>
+                        </a>
                     </ul>
                 </div>
             </div>

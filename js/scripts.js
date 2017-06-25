@@ -249,3 +249,27 @@ $(document).ready(function(){
 		$('.column').off('mousemove');
 	});
 });
+//
+function pc_tableSelectQuery(obj){
+//
+	var database = document.getElementById("conn_currentBase").innerText;
+	var table = obj.innerText;
+
+	ajax_loading_show();
+	$.ajax({
+		url: 'conn_valida.php',
+		type: 'POST',
+		data: 'address=127.0.0.1' + '&base=' + database + '&table=' + table + '&id=7',
+		success: function(ds){
+			ajax_loading_hide();
+			
+			if(ds.length > 0){
+				console.log(ds);
+				$('#pc_mi_table').html(ds);
+			}else{
+				alert("vazio");
+
+			}
+		}
+	});
+}

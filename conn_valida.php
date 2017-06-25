@@ -83,7 +83,32 @@ else if(isset($_POST['id']) && $_POST['id'] == 6){
 	}catch(exception $e){
 		echo "error";
 	}
-}else{
+}
+//
+//QUERY SELECT
+else if(isset($_POST['id']) && $_POST['id'] == 7){
+		$conn = new Conn('mysql', $_POST['address'], $_SESSION['conn'][$_POST['address']]['usr'], $_SESSION['conn'][$_POST['address']]['psw']);
+		if($conn->useDatabase($_POST['base'])){
+			//Query SELECT
+			$statement = "SELECT * FROM " . $_POST['table'] . " LIMIT 10";
+			$res = $conn->select($statement);
+			$output = "<table>";
+			if(!empty($res)){
+				foreach($res as $key){
+					$output .= "<tr>";
+					foreach($key as $key2){
+						$output .= "<td>" .$key2. "</td>";
+					}
+					$output .= "</tr>";
+				}
+			}
+			echo $output . "</table>";
+		}else{
+			echo "Erro ao selecionar base;";
+		}
+}
+//Exit
+else{
 	header('location: index.php');
 }
 ?>
