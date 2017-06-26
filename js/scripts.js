@@ -273,3 +273,23 @@ function pc_tableSelectQuery(obj){
 		}
 	});
 }
+//
+function pc_tableNavigate(){
+	$.ajax({
+		url: 'conn_valida.php',
+		type: 'POST',
+		data: 'address=127.0.0.1' + '&id=8',
+		success: function(ds){
+			
+			if(ds.length > 0){
+				console.log(ds);
+				$('#pc_mi_table').html(ds);
+			}else{
+				alert("vazio");
+
+			}
+		}
+	});
+}
+
+$_SESSION['conn'][$_POST['address']]['mi_lastSelect']

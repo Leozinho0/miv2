@@ -89,12 +89,32 @@ else if(isset($_POST['id']) && $_POST['id'] == 6){
 else if(isset($_POST['id']) && $_POST['id'] == 7){
 		$conn = new Conn('mysql', $_POST['address'], $_SESSION['conn'][$_POST['address']]['usr'], $_SESSION['conn'][$_POST['address']]['psw']);
 		if($conn->useDatabase($_POST['base'])){
+
 			//Query SELECT
+			$database = $_POST['base'];
+			$tableName = $_POST['table'];
 			$statement = "SELECT * FROM " . $_POST['table'] . " LIMIT 10";
-			$res = $conn->select($statement);
+
+			//Salva em sessão último SELECT
+			$_SESSION['conn'][$_POST['address']]['mi_lastSelect'] = $statement;
+
+			$res_fields = $conn->select_fields($statement, $database, $tableName);
+			$res_rows = $conn->select($statement);
+
 			$output = "<table>";
-			if(!empty($res)){
-				foreach($res as $key){
+			//Table Fields (collumns)
+			if(!empty($res_fields)){
+				$output .= '<tr class="table_fields">';
+				foreach($res_fields as $key){
+					foreach($key as $key2){
+						$output .= "<td>" .$key2. "</td>";
+					}
+				}
+				$output .= "</tr>";
+			}
+			//Table rows
+			if(!empty($res_rows)){
+				foreach($res_rows as $key){
 					$output .= "<tr>";
 					foreach($key as $key2){
 						$output .= "<td>" .$key2. "</td>";
@@ -107,6 +127,41 @@ else if(isset($_POST['id']) && $_POST['id'] == 7){
 			echo "Erro ao selecionar base;";
 		}
 }
+
+else if(isset($_POST['id']) && $_POST['id'] == 8){
+		$conn = new Conn('mysql', $_POST['address'], $_SESSION['conn'][$_POST['address']]['usr'], $_SESSION['conn'][$_POST['address']]['psw']);
+		if($conn->useDatabase($_POST['base'])){
+			$lastStatement = $_SESSION['conn'][$_POST['address']]['mi_lastSelect'];
+
+			$res_fields = $conn->select_fields($statement, $database, $tableName);
+			$res_rows = $conn->select($statement);
+
+			$output = "<table>";
+			//Table Fields (collumns)
+			if(!empty($res_fields)){
+				$output .= '<tr class="table_fields">';
+				foreach($res_fields as $key){
+					foreach($key as $key2){
+						$output .= "<td>" .$key2. "</td>";
+					}
+				}
+				$output .= "</tr>";
+			}
+			//Table rows
+			if(!empty($res_rows)){
+				foreach($res_rows as $key){
+					$output .= "<tr>";
+					foreach($key as $key2){
+						$output .= "<td>" .$key2. "</td>";
+					}
+					$output .= "</tr>";
+				}
+			}
+			echo $output . "</table>";
+
+		}
+}
+
 //Exit
 else{
 	header('location: index.php');

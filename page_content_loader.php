@@ -22,7 +22,7 @@ if(isset($_GET['pc_load'])){
 			</div> 
 
 
-			<div class="pc_default_container_navigation"> <div>Exibir <select name="" id=""><option value="10">10</option><option value="50">50</option><option value="100">100</option></select></div> <div><a href=""> <img src="img/pmahomme/img/bd_firstpage.png" alt=""></a> <a href=""> <img src="img/pmahomme/img/bd_prevpage.png" alt=""></a> <a href=""> <img src="img/pmahomme/img/bd_nextpage.png" alt=""></a> <a href=""> <img src="img/pmahomme/img/bd_lastpage.png" alt=""></a> </div> <div>_____</div> </div> 
+			<div class="pc_default_container_navigation"> <div>Exibir <select name="" id="" onchange="pc_tableNavigate();" ><option value="10">10</option><option value="50">50</option><option value="100">100</option></select></div> <div><a href=""> <img src="img/pmahomme/img/bd_firstpage.png" alt=""></a> <a href=""> <img src="img/pmahomme/img/bd_prevpage.png" alt=""></a> <a href=""> <img src="img/pmahomme/img/bd_nextpage.png" alt=""></a> <a href=""> <img src="img/pmahomme/img/bd_lastpage.png" alt=""></a> </div> <div>_____</div> </div> 
 
 			</div> </div> ';
 			

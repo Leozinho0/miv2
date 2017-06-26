@@ -174,15 +174,30 @@ class Conn extends PDO{
 		return $arr_retorno;
 	}
 
+	public function select_fields($statement, $database, $tableName){
+		$arr_retorno = array();
+
+		//Return column names
+		$columnNames = "SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='" . $database . "' AND `TABLE_NAME`='". $tableName ."';";
+
+		if($rs = $this->conn_obj->query($columnNames, PDO::FETCH_ASSOC)){
+			foreach($rs as $key){
+					$arr_retorno[] = $key;
+			}
+		}
+		return $arr_retorno;
+	}
+
 	public function select($statement){
 		$arr_retorno = array();
+
 		if($rs = $this->conn_obj->query($statement, PDO::FETCH_ASSOC)){
 			foreach($rs as $key)
 			{
 				$arr_retorno[] = $key;
 			}
-			return $arr_retorno;
 		}
+		return $arr_retorno;
 	}
 
 	public function massiveInsert($table, $qtd=1){

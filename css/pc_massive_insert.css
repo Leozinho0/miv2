@@ -64,6 +64,9 @@
 	border: 1px solid grey;
 	padding: 3px;
 }
-#pc_mi_table tr:nth-child(odd){
+#pc_mi_table tr:nth-child(2n){
 	background-color: white;
+}
+.table_fields{
+	background-color: beige;
 }
