@@ -93,10 +93,8 @@ else if(isset($_POST['id']) && $_POST['id'] == 7){
 			//Query SELECT
 			$database = $_POST['base'];
 			$tableName = $_POST['table'];
-			$statement = "SELECT * FROM " . $_POST['table'] . " LIMIT 10";
-
-			//Salva em sessão último SELECT
-			$_SESSION['conn'][$_POST['address']]['mi_lastSelect'] = $statement;
+			$qtd = $_POST['qtd'];
+			$statement = "SELECT * FROM " . $tableName . " LIMIT " . $qtd;
 
 			$res_fields = $conn->select_fields($statement, $database, $tableName);
 			$res_rows = $conn->select($statement);
@@ -128,40 +126,98 @@ else if(isset($_POST['id']) && $_POST['id'] == 7){
 		}
 }
 
-else if(isset($_POST['id']) && $_POST['id'] == 8){
+else if(isset($_POST['id']) && $_POST['id'] == 8 && isset($_POST['qtd'])){
 		$conn = new Conn('mysql', $_POST['address'], $_SESSION['conn'][$_POST['address']]['usr'], $_SESSION['conn'][$_POST['address']]['psw']);
-		if($conn->useDatabase($_POST['base'])){
-			$lastStatement = $_SESSION['conn'][$_POST['address']]['mi_lastSelect'];
+		
+		$qtd =$_POST['qtd'];
+		$database = $_POST['base'];
+		$tableName = $_POST['table'];
 
-			$res_fields = $conn->select_fields($statement, $database, $tableName);
-			$res_rows = $conn->select($statement);
+		if(!empty($database) && !empty($tableName)){
+			if($conn->useDatabase($database)){
 
-			$output = "<table>";
-			//Table Fields (collumns)
-			if(!empty($res_fields)){
-				$output .= '<tr class="table_fields">';
-				foreach($res_fields as $key){
-					foreach($key as $key2){
-						$output .= "<td>" .$key2. "</td>";
-					}
-				}
-				$output .= "</tr>";
-			}
-			//Table rows
-			if(!empty($res_rows)){
-				foreach($res_rows as $key){
-					$output .= "<tr>";
-					foreach($key as $key2){
-						$output .= "<td>" .$key2. "</td>";
+				$statement = "SELECT * FROM " . $tableName . " LIMIT " . $qtd;
+				$res_fields = $conn->select_fields($statement, $database, $tableName);
+				$res_rows = $conn->select($statement);
+
+				$output = "<table>";
+				//Table Fields (collumns)
+				if(!empty($res_fields)){
+					$output .= '<tr class="table_fields">';
+					foreach($res_fields as $key){
+						foreach($key as $key2){
+							$output .= "<td>" .$key2. "</td>";
+						}
 					}
 					$output .= "</tr>";
 				}
-			}
-			echo $output . "</table>";
+				//Table rows
+				if(!empty($res_rows)){
+					foreach($res_rows as $key){
+						$output .= "<tr>";
+						foreach($key as $key2){
+							$output .= "<td>" .$key2. "</td>";
+						}
+						$output .= "</tr>";
+					}
+				}
+				echo $output . "</table>";
 
+			}
+		}else{
+			echo "Selecione uma tabela";
 		}
 }
+else if(isset($_POST['id']) && isset($_POST['qtd']) && $_POST['id'] == 9){
+		$conn = new Conn('mysql', $_POST['address'], $_SESSION['conn'][$_POST['address']]['usr'], $_SESSION['conn'][$_POST['address']]['psw']);
+		
+		$qtd =$_POST['qtd'];
+		$database = $_POST['base'];
+		$tableName = $_POST['table'];
+		$countSelect = "SELECT COUNT(*) FROM " . $tableName;
 
+		if(!empty($database) && !empty($tableName)){
+			if($conn->useDatabase($database)){
+
+				//$statement = "SELECT * FROM " . $tableName . " LIMIT " . $qtd;
+				//$res_fields = $conn->select_fields($statement, $database, $tableName);
+				$res_count = $conn->select($countSelect);
+				/*
+				$output = "<table>";
+				//Table Fields (collumns)
+				if(!empty($res_fields)){
+					$output .= '<tr class="table_fields">';
+					foreach($res_fields as $key){
+						foreach($key as $key2){
+							$output .= "<td>" .$key2. "</td>";
+						}
+					}
+					$output .= "</tr>";
+				}
+				//Table rows
+				if(!empty($res_rows)){
+					foreach($res_rows as $key){
+						$output .= "<tr>";
+						foreach($key as $key2){
+							$output .= "<td>" .$key2. "</td>";
+						}
+						$output .= "</tr>";
+					}
+				}
+				//echo $output . "</table>";
+				*/
+				foreach ($res_count as $key){
+					foreach($key as $key2){
+						echo $key2;
+						//echo $countSelect;
+					}
+				}
+
+			}
+		}else{
+			echo "Selecione uma tabela";
+		}
+}
 //Exit
 else{
 	header('location: index.php');

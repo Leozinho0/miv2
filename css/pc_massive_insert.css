@@ -27,7 +27,13 @@
 }
 .pc_default_container_navigation > div{
 	display: inline-block;
-	width: 30%;
+	width: 32%;
+}
+.pc_default_container_navigation > div:first-child{
+	text-align: left;
+}
+.pc_default_container_navigation > div:last-child{
+	text-align: right;
 }
 .pc_default_container_title{
 	background-color: #D1D5D8;
