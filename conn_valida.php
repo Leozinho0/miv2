@@ -94,10 +94,29 @@ else if(isset($_POST['id']) && $_POST['id'] == 7){
 			$database = $_POST['base'];
 			$tableName = $_POST['table'];
 			$qtd = $_POST['qtd'];
+
+			//Checka navegação... Tá uma bagunça, mostra como eu sou organizado ¬¬'
+			if(isset($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'])){
+				if($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] > '0'){
+					if($_POST['navig'] === '1'){
+						$qtd = $_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] + $qtd . ', ' . $qtd;
+					}else if($_POST['navig'] === '-1'){
+						$qtd = $_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] - $qtd . ', ' . $qtd;
+						//$qtd = 0, 10 
+					}
+				}
+
+			}
+
+			//Query final SELECT * FROM TABELA LIMIT
 			$statement = "SELECT * FROM " . $tableName . " LIMIT " . $qtd;
 
 			$res_fields = $conn->select_fields($statement, $database, $tableName);
 			$res_rows = $conn->select($statement);
+			$qtd = explode(",", $qtd);
+			//S_SESSION = 0
+			$_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] = $qtd[0];
+
 
 			$output = "<table>";
 			//Table Fields (collumns)
@@ -121,6 +140,8 @@ else if(isset($_POST['id']) && $_POST['id'] == 7){
 				}
 			}
 			echo $output . "</table>";
+			//echo $statement;
+			//var_dump($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit']);
 		}else{
 			echo "Erro ao selecionar base;";
 		}

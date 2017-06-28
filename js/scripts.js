@@ -250,23 +250,26 @@ $(document).ready(function(){
 	});
 });
 //
-function pc_tableSelectQuery(obj){
+function pc_tableSelectQuery(obj, navig){
 //
 	var database = document.getElementById("conn_currentBase").innerText;
 	var table = obj.innerText;
-	var qtd = document.getElementById("conn_currentQtd").value;
+	var limit = document.getElementById("conn_currentQtd").value;
 
 	ajax_loading_show();
 	$.ajax({
 		url: 'conn_valida.php',
 		type: 'POST',
-		data: 'address=127.0.0.1' + '&base=' + database + '&table=' + table + '&qtd=' + qtd + '&id=7',
+		data: 'address=127.0.0.1' + '&base=' + database + '&table=' + table + '&qtd=' + limit + '&navig=' + navig + '&id=7',
 		success: function(ds){
 			ajax_loading_hide();
 			$("#conn_currentTable").html(table);
 			if(ds.length > 0){
 				console.log(ds);
 				$('#pc_mi_table').html(ds);
+
+				//Retorna o Count da query e mostra na div
+				pc_upSummary();
 			}else{
 				alert("vazio");
 
@@ -274,7 +277,17 @@ function pc_tableSelectQuery(obj){
 		}
 	});
 }
-function pc_tableNavigate(){
+function pc_paginate(sentido){
+
+	//avanca: 1
+	//volta: -1
+	//Final: 2
+	//Primeira: -2
+	var table = document.getElementById("conn_currentTable");
+	pc_tableSelectQuery(table, sentido);
+
+}
+function pc_upSummary(ds_limit){
 //
 	var database = document.getElementById("conn_currentBase").innerText;
 	var table = document.getElementById("conn_currentTable").innerText;
@@ -286,8 +299,11 @@ function pc_tableNavigate(){
 		data: 'address=127.0.0.1' + '&base=' + database + '&table=' + table + '&qtd=' + qtd + '&id=9',
 		success: function(ds){
 			if(1){
-				var content = "[1 - 10 de " + ds + "]";
-				$("#mi_tableNavigCount").html(content);
+				arr_retorno = JSON.parse(ds);
+				console.log(arr_retorno);
+
+				var html_content = "[1 - 10 de " + arr_retorno + "]";
+				$("#mi_tableSummary").html(html_content);
 				console.log(ds);
 			}
 
@@ -307,7 +323,7 @@ function pc_tableExibirQtd(qtd){
 		success: function(ds){
 			
 			if(ds.length > 0){
-				console.log(ds);
+				var count = "[1 - 10 de " + ds + "]";
 				$('#pc_mi_table').html(ds);
 			}else{
 				alert("vazio");
