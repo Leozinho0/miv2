@@ -139,7 +139,12 @@ else if(isset($_POST['id']) && $_POST['id'] == 7){
 					$output .= "</tr>";
 				}
 			}
-			echo $output . "</table>";
+			$output .= "</table>";
+
+			$arr_retorno = array();
+			$arr_retorno[] = $output;
+
+			echo json_encode($arr_retorno);
 			//echo $statement;
 			//var_dump($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit']);
 		}else{

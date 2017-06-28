@@ -262,11 +262,13 @@ function pc_tableSelectQuery(obj, navig){
 		type: 'POST',
 		data: 'address=127.0.0.1' + '&base=' + database + '&table=' + table + '&qtd=' + limit + '&navig=' + navig + '&id=7',
 		success: function(ds){
+			var arr_retorno = JSON.parse(ds);
 			ajax_loading_hide();
+			console.log(arr_retorno);
 			$("#conn_currentTable").html(table);
 			if(ds.length > 0){
 				console.log(ds);
-				$('#pc_mi_table').html(ds);
+				$('#pc_mi_table').html(arr_retorno[0]);
 
 				//Retorna o Count da query e mostra na div
 				pc_upSummary();
