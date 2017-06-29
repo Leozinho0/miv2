@@ -174,7 +174,7 @@ class Conn extends PDO{
 		return $arr_retorno;
 	}
 
-	public function select_fields($statement, $database, $tableName){
+	public function select_fields($database, $tableName){
 		$arr_retorno = array();
 
 		//Return column names

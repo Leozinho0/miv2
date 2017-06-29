@@ -22,7 +22,7 @@ if(isset($_GET['pc_load'])){
 			</div> 
 
 
-			<div class="pc_default_container_navigation"> <div>Exibir <select name="" id="conn_currentQtd" onchange="pc_tableExibirQtd(this.value);" ><option value="10">10</option><option value="50">50</option><option value="100">100</option></select></div> <div><a href=""> <img src="img/pmahomme/img/bd_firstpage.png" alt=""></a> <a href="" onclick="pc_paginate(-1); return false;"> <img src="img/pmahomme/img/bd_prevpage.png" alt=""></a> <a href="" onclick="pc_paginate(1); return false;"> <img src="img/pmahomme/img/bd_nextpage.png" alt=""></a> <a href=""> <img src="img/pmahomme/img/bd_lastpage.png" alt=""></a> </div> <div id="mi_tableSummary">[0 - 0 de 0]</div> </div> 
+			<div class="pc_default_container_navigation"> <div>Exibir <select name="" id="conn_currentQtd" onchange="pc_tableExibirQtd(this.value);" ><option value="10">10</option><option value="50">50</option><option value="100">100</option></select></div> <div><a href=""> <img src="img/pmahomme/img/bd_firstpage.png" alt=""></a> <a href="" id="navigate_prev" onclick="mi_navigate(-1); return false;"> <img src="img/pmahomme/img/bd_prevpage.png" alt=""></a> <a href="" onclick="mi_navigate(1); return false;"> <img src="img/pmahomme/img/bd_nextpage.png" alt=""></a> <a href=""> <img src="img/pmahomme/img/bd_lastpage.png" alt=""></a> </div> <div id="mi_tableSummary">[0 - 0 de 0]</div> </div> 
 
 			</div> </div> ';
 			

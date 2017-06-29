@@ -244,6 +244,73 @@ else if(isset($_POST['id']) && isset($_POST['qtd']) && $_POST['id'] == 9){
 			echo "Selecione uma tabela";
 		}
 }
+//QUERY SELECT
+else if(isset($_POST['id']) && $_POST['id'] == 10){
+		$conn = new Conn('mysql', $_POST['address'], $_SESSION['conn'][$_POST['address']]['usr'], $_SESSION['conn'][$_POST['address']]['psw']);
+		if($conn->useDatabase($_POST['base'])){
+
+			//Query SELECT
+			$database = $_POST['base'];
+			$tableName = $_POST['table'];
+			$qtd = $_POST['limit'];
+			$navig = $_POST['navig'];
+
+			//Checa navegação...
+			if(isset($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'])){
+				if($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] > 0){
+					if($_POST['navig'] === '1'){
+						$qtd = $_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] + $qtd . ', ' . $qtd;
+					}else if($_POST['navig'] === '-1'){
+						$qtd = $_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] - $qtd . ', ' . $qtd;
+					}
+				}
+
+			}
+
+			//Query final SELECT * FROM TABELA LIMIT
+			$statement = "SELECT * FROM " . $tableName . " LIMIT " . $qtd;
+
+			$res_fields = $conn->select_fields($database, $tableName);
+			$res_rows = $conn->select($statement);
+			$qtd = explode(",", $qtd);
+			//S_SESSION = 0
+			$_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] = $qtd[0];
+
+
+			$output = "<table>";
+			//Table Fields (collumns)
+			if(!empty($res_fields)){
+				$output .= '<tr class="table_fields">';
+				foreach($res_fields as $key){
+					foreach($key as $key2){
+						$output .= "<td>" .$key2. "</td>";
+					}
+				}
+				$output .= "</tr>";
+			}
+			//Table rows
+			if(!empty($res_rows)){
+				foreach($res_rows as $key){
+					$output .= "<tr>";
+					foreach($key as $key2){
+						$output .= "<td>" .$key2. "</td>";
+					}
+					$output .= "</tr>";
+				}
+			}
+			$output .= "</table>";
+
+			$arr_retorno = array();
+			$arr_retorno[] = $output;
+			$arr_retorno[] = "{firstPage: true}";
+
+			echo json_encode($arr_retorno);
+			//echo $statement;
+			//echo $_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'];
+		}else{
+			echo "Erro ao selecionar base;";
+		}
+}
 //Exit
 else{
 	header('location: index.php');

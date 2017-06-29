@@ -279,14 +279,41 @@ function pc_tableSelectQuery(obj, navig){
 		}
 	});
 }
-function pc_paginate(sentido){
+function mi_navigate(navig){
 
 	//avanca: 1
 	//volta: -1
 	//Final: 2
 	//Primeira: -2
-	var table = document.getElementById("conn_currentTable");
-	pc_tableSelectQuery(table, sentido);
+
+	var database = document.getElementById("conn_currentBase").innerText;
+	var table = document.getElementById("conn_currentTable").innerText;
+	var limit = document.getElementById("conn_currentQtd").value;
+
+	$.ajax({
+		url: 'conn_valida.php',
+		type: 'POST',
+		data: 'address=127.0.0.1' + '&base=' + database + '&table=' + table + '&limit=' + limit + '&navig=' + navig + '&id=10',
+		success: function(ds){
+			var arr_retorno = JSON.parse(ds);
+
+				console.log(arr_retorno);
+			$("#conn_currentTable").html(table);
+			if(ds.length > 0){
+				$('#pc_mi_table').html(arr_retorno[0]);
+				if(1){
+					$("#navigate_prev").hide();
+				}else{
+					$("#navigate_prev").show();
+				}
+				//Retorna o Count da query e mostra na div
+				pc_upSummary();
+			}else{
+				alert("vazio");
+
+			}
+		}
+	});
 
 }
 function pc_upSummary(ds_limit){
