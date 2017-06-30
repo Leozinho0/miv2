@@ -111,7 +111,7 @@ else if(isset($_POST['id']) && $_POST['id'] == 7){
 			//Query final SELECT * FROM TABELA LIMIT
 			$statement = "SELECT * FROM " . $tableName . " LIMIT " . $qtd;
 
-			$res_fields = $conn->select_fields($statement, $database, $tableName);
+			$res_fields = $conn->select_fields($database, $tableName);
 			$res_rows = $conn->select($statement);
 			$qtd = explode(",", $qtd);
 			//S_SESSION = 0
@@ -254,6 +254,7 @@ else if(isset($_POST['id']) && $_POST['id'] == 10){
 			$tableName = $_POST['table'];
 			$qtd = $_POST['limit'];
 			$navig = $_POST['navig'];
+			$navigation_variables = array('firstPage' => false, 'lastPage' => false);
 
 			//Checa navegação...
 			if(isset($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'])){
@@ -274,6 +275,11 @@ else if(isset($_POST['id']) && $_POST['id'] == 10){
 			$res_rows = $conn->select($statement);
 			$qtd = explode(",", $qtd);
 			//S_SESSION = 0
+			if($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] <= 10){
+				$navigation_variables['firstPage'] = true;
+			}else{
+				$_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] = false;
+			}
 			$_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] = $qtd[0];
 
 
@@ -302,7 +308,7 @@ else if(isset($_POST['id']) && $_POST['id'] == 10){
 
 			$arr_retorno = array();
 			$arr_retorno[] = $output;
-			$arr_retorno[] = "{firstPage: true}";
+			$arr_retorno[] = json_encode($navigation_variables);
 
 			echo json_encode($arr_retorno);
 			//echo $statement;

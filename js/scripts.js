@@ -256,7 +256,7 @@ function pc_tableSelectQuery(obj, navig){
 	var table = obj.innerText;
 	var limit = document.getElementById("conn_currentQtd").value;
 
-	ajax_loading_show();
+	//ajax_loading_show();
 	$.ajax({
 		url: 'conn_valida.php',
 		type: 'POST',
@@ -295,16 +295,20 @@ function mi_navigate(navig){
 		type: 'POST',
 		data: 'address=127.0.0.1' + '&base=' + database + '&table=' + table + '&limit=' + limit + '&navig=' + navig + '&id=10',
 		success: function(ds){
+			console.log(ds);
 			var arr_retorno = JSON.parse(ds);
+			var html = arr_retorno[0];
+			var navigation_variables = JSON.parse(arr_retorno[1]);
 
-				console.log(arr_retorno);
 			$("#conn_currentTable").html(table);
 			if(ds.length > 0){
-				$('#pc_mi_table').html(arr_retorno[0]);
-				if(1){
+				$('#pc_mi_table').html(html);
+				if(navigation_variables.firstPage){
 					$("#navigate_prev").hide();
-				}else{
+				}else if(!navigation_variables.firstPage){
 					$("#navigate_prev").show();
+				}else if(navigation_variables.lastPage){
+					$("#navigate_next").show();
 				}
 				//Retorna o Count da query e mostra na div
 				pc_upSummary();
