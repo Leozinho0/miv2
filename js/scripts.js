@@ -262,13 +262,23 @@ function pc_tableSelectQuery(obj, navig){
 		type: 'POST',
 		data: 'address=127.0.0.1' + '&base=' + database + '&table=' + table + '&qtd=' + limit + '&navig=' + navig + '&id=7',
 		success: function(ds){
-			var arr_retorno = JSON.parse(ds);
 			ajax_loading_hide();
-			console.log(arr_retorno);
+			var arr_retorno = JSON.parse(ds);
+			var html = arr_retorno[0];
+			var navigation_variables = JSON.parse(arr_retorno[1]);
+
+			console.log(navigation_variables);
 			$("#conn_currentTable").html(table);
 			if(ds.length > 0){
-				console.log(ds);
-				$('#pc_mi_table').html(arr_retorno[0]);
+				$('#pc_mi_table').html(html);
+				if(navigation_variables.firstPage === true && navigation_variables.lastPage === false){
+					mi_table_navigToggle('first');
+				}else if(navigation_variables.firstPage === false && navigation_variables.lastPage === true){
+					mi_table_navigToggle('last');
+				}else{
+					mi_table_navigToggle('middle');
+				}
+
 
 				//Retorna o Count da query e mostra na div
 				pc_upSummary();
@@ -295,20 +305,20 @@ function mi_navigate(navig){
 		type: 'POST',
 		data: 'address=127.0.0.1' + '&base=' + database + '&table=' + table + '&limit=' + limit + '&navig=' + navig + '&id=10',
 		success: function(ds){
-			console.log(ds);
 			var arr_retorno = JSON.parse(ds);
 			var html = arr_retorno[0];
 			var navigation_variables = JSON.parse(arr_retorno[1]);
+			console.log(arr_retorno);
 
 			$("#conn_currentTable").html(table);
 			if(ds.length > 0){
 				$('#pc_mi_table').html(html);
-				if(navigation_variables.firstPage){
-					$("#navigate_prev").hide();
-				}else if(!navigation_variables.firstPage){
-					$("#navigate_prev").show();
-				}else if(navigation_variables.lastPage){
-					$("#navigate_next").show();
+				if(navigation_variables.firstPage === true && navigation_variables.lastPage === false){
+					mi_table_navigToggle('first');
+				}else if(navigation_variables.firstPage === false && navigation_variables.lastPage === true){
+					mi_table_navigToggle('last');
+				}else{
+					mi_table_navigToggle('middle');
 				}
 				//Retorna o Count da query e mostra na div
 				pc_upSummary();
@@ -320,6 +330,26 @@ function mi_navigate(navig){
 	});
 
 }
+//
+function mi_table_navigToggle(navigPos){
+	if(navigPos === 'first'){
+		$('#navigate_prev').addClass('navig_disabled').removeClass('navig_enabled');
+		$('#navigate_first').addClass('navig_disabled').removeClass('navig_enabled');
+		$('#navigate_next').addClass('navig_enabled').removeClass('navig_disabled');
+		$('#navigate_last').addClass('navig_enabled').removeClass('navig_disabled');
+	}else if(navigPos === 'last'){
+		$('#navigate_next').addClass('navig_disabled').removeClass('navig_enabled');
+		$('#navigate_last').addClass('navig_disabled').removeClass('navig_enabled');
+		$('#navigate_prev').addClass('navig_enabled').removeClass('navig_disabled');
+		$('#navigate_first').addClass('navig_enabled').removeClass('navig_disabled');
+	}else{
+		$('#navigate_prev').addClass('navig_enabled').removeClass('navig_disabled');
+		$('#navigate_first').addClass('navig_enabled').removeClass('navig_disabled');
+		$('#navigate_next').addClass('navig_enabled').removeClass('navig_disabled');
+		$('#navigate_last').addClass('navig_enabled').removeClass('navig_disabled');
+	}
+}
+//
 function pc_upSummary(ds_limit){
 //
 	var database = document.getElementById("conn_currentBase").innerText;

@@ -65,14 +65,30 @@
 #pc_mi_table{
 	border: 1px solid;
 	border-collapse: collapse;
+	width: 100%;
 }
 #pc_mi_table td{
 	border: 1px solid grey;
 	padding: 3px;
+	font-family: 'arial';
 }
 #pc_mi_table tr:nth-child(2n){
 	background-color: white;
 }
+#pc_mi_table tr:not(.table_fields):hover{
+	background-color: #D1D5D8;
+}
 .table_fields{
-	background-color: beige;
+	background-color: lightsteelblue;
+	font-size: 1.1em;
+}
+.navig_btn > img:hover{
+}
+.navig_disabled{
+	pointer-events: none;
+	opacity: 0.5;
+}
+.navig_enabled{
+	pointer-events: all;
+	opacity: 1;
 }

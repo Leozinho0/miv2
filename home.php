@@ -161,8 +161,7 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
             .header_right_container_ltoolbar a{
                 text-decoration: none;
                 color: grey;
-                font-weight: bolder;
-                //text-shadow: 1px 1px 10px #000;
+                font-size: 1.2em;
             }
             .ajax_main_loading {
                 display: none;

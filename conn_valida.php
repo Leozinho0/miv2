@@ -94,19 +94,9 @@ else if(isset($_POST['id']) && $_POST['id'] == 7){
 			$database = $_POST['base'];
 			$tableName = $_POST['table'];
 			$qtd = $_POST['qtd'];
-
-			//Checka navegação... Tá uma bagunça, mostra como eu sou organizado ¬¬'
-			if(isset($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'])){
-				if($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] > '0'){
-					if($_POST['navig'] === '1'){
-						$qtd = $_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] + $qtd . ', ' . $qtd;
-					}else if($_POST['navig'] === '-1'){
-						$qtd = $_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] - $qtd . ', ' . $qtd;
-						//$qtd = 0, 10 
-					}
-				}
-
-			}
+			$navigation_variables = array('firstPage' => true, 'lastPage' => false);
+			//Salva o limit inicial em sessão
+			$_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] = 0;
 
 			//Query final SELECT * FROM TABELA LIMIT
 			$statement = "SELECT * FROM " . $tableName . " LIMIT " . $qtd;
@@ -114,8 +104,6 @@ else if(isset($_POST['id']) && $_POST['id'] == 7){
 			$res_fields = $conn->select_fields($database, $tableName);
 			$res_rows = $conn->select($statement);
 			$qtd = explode(",", $qtd);
-			//S_SESSION = 0
-			$_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] = $qtd[0];
 
 
 			$output = "<table>";
@@ -143,10 +131,10 @@ else if(isset($_POST['id']) && $_POST['id'] == 7){
 
 			$arr_retorno = array();
 			$arr_retorno[] = $output;
+			$arr_retorno[] = json_encode($navigation_variables);
 
 			echo json_encode($arr_retorno);
-			//echo $statement;
-			//var_dump($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit']);
+			//echo json_encode($statement);
 		}else{
 			echo "Erro ao selecionar base;";
 		}
@@ -255,33 +243,42 @@ else if(isset($_POST['id']) && $_POST['id'] == 10){
 			$qtd = $_POST['limit'];
 			$navig = $_POST['navig'];
 			$navigation_variables = array('firstPage' => false, 'lastPage' => false);
+			$res_fields = "";
+			$res_rows = "";
 
 			//Checa navegação...
 			if(isset($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'])){
-				if($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] > 0){
-					if($_POST['navig'] === '1'){
-						$qtd = $_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] + $qtd . ', ' . $qtd;
-					}else if($_POST['navig'] === '-1'){
-						$qtd = $_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] - $qtd . ', ' . $qtd;
+				if($_POST['navig'] === '1'){
+					$qtd = $_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] + $qtd . ', ' . $qtd;
+
+
+				}else if($_POST['navig'] === '-1'){
+					$qtd = ($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] - $qtd) . ', ' . $qtd;
+
+					if($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] <= '10'){
+						$navigation_variables['firstPage'] = true;
 					}
 				}
+				//Query final SELECT * FROM TABELA LIMIT
+				$statement = "SELECT * FROM " . $tableName . " LIMIT " . $qtd;
 
+				$res_fields = $conn->select_fields($database, $tableName);
+				$res_rows = $conn->select($statement);
+				$qtd = explode(",", $qtd);
+				//Atualiza ultimo Limit
+				$_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] = $qtd[0];
+
+				$countQuery = "SELECT COUNT(*) FROM " . $tableName;
+				$countSelect = $conn->select($countQuery);
+				foreach($countSelect as $key){
+					foreach($key as $key2){
+						$countSelect = $key2;
+					}
+				}
+				if(($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'])*2 >= $countSelect){
+					$navigation_variables['lastPage'] = true;
+				}
 			}
-
-			//Query final SELECT * FROM TABELA LIMIT
-			$statement = "SELECT * FROM " . $tableName . " LIMIT " . $qtd;
-
-			$res_fields = $conn->select_fields($database, $tableName);
-			$res_rows = $conn->select($statement);
-			$qtd = explode(",", $qtd);
-			//S_SESSION = 0
-			if($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] <= 10){
-				$navigation_variables['firstPage'] = true;
-			}else{
-				$_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] = false;
-			}
-			$_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] = $qtd[0];
-
 
 			$output = "<table>";
 			//Table Fields (collumns)
