@@ -58,6 +58,13 @@
 .pc_default_container_table{
 	overflow-x: auto;
 }
+#pc_table_errors{
+	text-align: center;
+	font-weight: bolder;
+	color: red;
+	padding-top: 10px;
+	display: none;
+}
 .pc_ms_left .pc_ms_left_listTables div:nth-child(odd){
 	background-color: white;
 	border-radius: 5px;

@@ -277,6 +277,16 @@ function pc_tableSelectQuery(obj, navig){
 			$("#conn_currentTable").html(table);
 			if(ds.length > 0){
 				$('#pc_mi_table').html(html);
+				if(count_variables.of === 0){
+					//Cuspir os erros no select da tabela ou
+					// mensagem de sem registro aqui nessa div
+					var empty_table = "<div>Sem registros</div>";
+					$('#pc_table_errors').html(empty_table).show();
+				}else if(count_variables.of > 0){
+					$('#pc_table_errors').hide();
+				}else{
+					$('#pc_table_errors').html("Erro interno ao recuperar dados.").show();
+				}
 				$('#mi_tableSummary').html(count_html);
 
 				if(navigation_variables.firstPage === true && navigation_variables.lastPage === false){

@@ -18,11 +18,12 @@ if(isset($_GET['pc_load'])){
 			<h3 class="pc_default_container_title"> Propriedades da Tabela </h3>
 			<h4 id="conn_currentTable"></h4>
 			<div class="pc_default_container_table"> 
-			<table id="pc_mi_table"> </table> 
-			</div> 
+			<table id="pc_mi_table"> </table>
+			<div id="pc_table_errors"></div>
+			</div>
 
 
-			<div class="pc_default_container_navigation"> <div>Exibir <select name="" id="conn_currentQtd" onchange="pc_tableSelectQuery();" ><option value="10">10</option><option value="50">50</option><option value="100">100</option></select></div> <div><a href="" id="navigate_first" class="navig_btn"> <img src="img/pmahomme/img/bd_firstpage.png" alt=""></a> <a href="" id="navigate_prev" class="navig_btn" onclick="mi_navigate(-1); return false;"> <img src="img/pmahomme/img/bd_prevpage.png" alt=""></a> <a href="" id="navigate_next" class="navig_btn" onclick="mi_navigate(1); return false;"> <img src="img/pmahomme/img/bd_nextpage.png" alt=""></a> <a href="" id="navigate_last" class="navig_btn"> <img src="img/pmahomme/img/bd_lastpage.png" alt=""></a> </div> <div id="mi_tableSummary">[0 - 0 de 0]</div> </div> 
+			<div class="pc_default_container_navigation"> <div>Exibir <select name="" id="conn_currentQtd" onchange="pc_tableSelectQuery();" ><option value="10">10</option><option value="50">50</option><option value="100">100</option></select></div> <div><a href="" id="navigate_first" class="navig_disabled"> <img src="img/pmahomme/img/bd_firstpage.png" alt=""></a> <a href="" id="navigate_prev" class="navig_disabled" onclick="mi_navigate(-1); return false;"> <img src="img/pmahomme/img/bd_prevpage.png" alt=""></a> <a href="" id="navigate_next" class="navig_disabled" onclick="mi_navigate(1); return false;"> <img src="img/pmahomme/img/bd_nextpage.png" alt=""></a> <a href="" id="navigate_last" class="navig_disabled"> <img src="img/pmahomme/img/bd_lastpage.png" alt=""></a> </div> <div id="mi_tableSummary">[0 - 0 de 0]</div> </div> 
 
 			</div> </div> ';
 			

@@ -102,7 +102,7 @@ if(isset($_SESSION['conn'])){
 				$qtd = $_POST['qtd'];
 				$countSelect = "";
 				$navigation_variables = array('firstPage' => true, 'lastPage' => false);
-				$count_variables = array('from' => 1, 'to' => '0', 'of' => '0');
+				$count_variables = array('from' => 1, 'to' => 0, 'of' => 0);
 				//Salva o limit inicial em sessão
 				$_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] = 0;
 
