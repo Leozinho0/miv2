@@ -39,8 +39,9 @@
 	background-color: #D1D5D8;
 	text-align: center;
 	margin: 0;
-	color: grey;
+	color: lightslategrey;
 	padding: 3px;
+	font-size: 1.4em;
 }
 .pc_ms_left h4{
     padding: 0 10px;
@@ -75,9 +76,14 @@
 	width: 100%;
 }
 #pc_mi_table td{
-	border: 1px solid grey;
+	border: 1px solid #95A5A6;
 	padding: 3px;
 	font-family: 'arial';
+}
+#pc_mi_table tr:first-child{
+	color: white;
+	font-weight: bolder;
+	text-align: center;	
 }
 #pc_mi_table tr:nth-child(2n){
 	background-color: white;
@@ -86,7 +92,9 @@
 	background-color: #D1D5D8;
 }
 .table_fields{
-	background-color: lightsteelblue;
+	//background-color: lightsteelblue;
+	//background-color: lightslategray;
+	background-color: lightcoral;
 	font-size: 1.1em;
 }
 .navig_btn > img:hover{
