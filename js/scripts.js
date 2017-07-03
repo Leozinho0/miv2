@@ -267,13 +267,13 @@ function pc_tableSelectQuery(obj, navig){
 		data: 'address=127.0.0.1' + '&base=' + database + '&table=' + table + '&qtd=' + limit + '&navig=' + navig + '&id=7',
 		success: function(ds){
 			ajax_loading_hide();
+
 			var arr_retorno = JSON.parse(ds);
 			var html = arr_retorno[0];
 			var navigation_variables = JSON.parse(arr_retorno[1]);
 			var count_variables = JSON.parse(arr_retorno[2]);
 			var count_html = "[" + count_variables.from + " - " + count_variables.to + " de " + count_variables.of + "]";
 
-			console.log(count_variables);
 			$("#conn_currentTable").html(table);
 			if(ds.length > 0){
 				$('#pc_mi_table').html(html);
@@ -312,6 +312,17 @@ function mi_navigate(navig){
 	//Final: 2
 	//Primeira: -2
 
+	//First Page
+	if(navig === -2){
+		pc_tableSelectQuery();
+		return;
+	}
+
+	//Last Page
+	if(navig === 2){
+
+	}
+
 	var database = document.getElementById("conn_currentBase").innerText;
 	var table = document.getElementById("conn_currentTable").innerText;
 	var limit = document.getElementById("conn_currentQtd").value;
@@ -321,6 +332,8 @@ function mi_navigate(navig){
 		type: 'POST',
 		data: 'address=127.0.0.1' + '&base=' + database + '&table=' + table + '&limit=' + limit + '&navig=' + navig + '&id=10',
 		success: function(ds){
+			console.log(ds);
+
 			var arr_retorno = JSON.parse(ds);
 			var html = arr_retorno[0];
 			var navigation_variables = JSON.parse(arr_retorno[1]);

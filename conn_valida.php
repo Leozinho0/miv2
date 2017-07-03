@@ -146,7 +146,7 @@ if(isset($_SESSION['conn'])){
 					foreach($res_rows as $key){
 						$output .= "<tr>";
 						foreach($key as $key2){
-							$output .= "<td>" .$key2. "</td>";
+							$output .= "<td>" . $key2. "</td>";
 						}
 						$output .= "</tr>";
 					}
@@ -154,7 +154,7 @@ if(isset($_SESSION['conn'])){
 				$output .= "</table>";
 
 				$arr_retorno = array();
-				$arr_retorno[] = $output;
+				$arr_retorno[] = utf8_encode($output);
 				$arr_retorno[] = json_encode($navigation_variables);
 				$arr_retorno[] = json_encode($count_variables);
 
@@ -224,6 +224,15 @@ if(isset($_SESSION['conn'])){
 				$res_fields = "";
 				$res_rows = "";
 
+				//Pega count(*)
+				$countQuery = "SELECT COUNT(*) FROM " . $tableName;
+				$countSelect = $conn->select($countQuery);
+				foreach($countSelect as $key){
+					foreach($key as $key2){
+						$countSelect = $key2;
+					}
+				}
+
 				//Checa navegação...
 				if(isset($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'])){
 					if($_POST['navig'] === '1'){
@@ -231,12 +240,19 @@ if(isset($_SESSION['conn'])){
 
 
 					}else if($_POST['navig'] === '-1'){
+						if($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] < $qtd_init){
+							$_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] = $qtd_init;
+						}
 						$qtd = ($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] - $qtd) . ', ' . $qtd;
 
 						if($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] <= $qtd_init){
 							$navigation_variables['firstPage'] = true;
 						}
+					}else if($_POST['navig'] === '2'){
+						$qtd = ($countSelect - $qtd) . ", " . $qtd;
+							$navigation_variables['lastPage'] = true;
 					}
+					//
 					//Query final SELECT * FROM TABELA LIMIT
 					$statement = "SELECT * FROM " . $tableName . " LIMIT " . $qtd;
 
@@ -246,13 +262,6 @@ if(isset($_SESSION['conn'])){
 					//Atualiza ultimo Limit
 					$_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] = $qtd[0];
 
-					$countQuery = "SELECT COUNT(*) FROM " . $tableName;
-					$countSelect = $conn->select($countQuery);
-					foreach($countSelect as $key){
-						foreach($key as $key2){
-							$countSelect = $key2;
-						}
-					}
 					if(($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] + $qtd_init) >= $countSelect){
 						$navigation_variables['lastPage'] = true;
 					}
@@ -286,10 +295,10 @@ if(isset($_SESSION['conn'])){
 				$output .= "</table>";
 
 				$arr_retorno = array();
-				$arr_retorno[] = $output;
+				$arr_retorno[] = utf8_encode($output);
 				$arr_retorno[] = json_encode($navigation_variables);
 				//2 -> Debug Variables
-				$arr_retorno[] = json_encode($qtd_init);
+				$arr_retorno[] = json_encode($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit']);
 				$arr_retorno[] = json_encode($count_variables);
 
 				echo json_encode($arr_retorno);
