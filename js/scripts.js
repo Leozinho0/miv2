@@ -273,6 +273,14 @@ function pc_tableSelectQuery(obj, navig){
 			var navigation_variables = JSON.parse(arr_retorno[1]);
 			var count_variables = JSON.parse(arr_retorno[2]);
 			var count_html = "[" + count_variables.from + " - " + count_variables.to + " de " + count_variables.of + "]";
+			var navig_qtdPage_html = "&ensp;";
+
+			//APAGAR - MONTAGEM DA QUANTIDADE DE PÁGINAS
+			for(var i = 1; i <= navigation_variables.qtdPage; i++){
+				navig_qtdPage_html += "<a href=''>" + i + "</a>" + "&ensp;";
+			}
+			$('#navigate_qtdPage').html(navig_qtdPage_html);
+			//
 
 			$("#conn_currentTable").html(table);
 			if(ds.length > 0){

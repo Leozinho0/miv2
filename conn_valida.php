@@ -101,8 +101,7 @@ if(isset($_SESSION['conn'])){
 				$tableName = $_POST['table'];
 				$qtd = $_POST['qtd'];
 				$countSelect = "";
-				$qtd_page = (int) 0;
-				$navigation_variables = array('firstPage' => true, 'lastPage' => false);
+				$navigation_variables = array('firstPage' => true, 'lastPage' => false, 'qtdPage' => (int)0);
 				$count_variables = array('from' => 1, 'to' => 0, 'of' => 0);
 				//Salva o limit inicial em sessão
 				$_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'] = 0;
@@ -116,9 +115,10 @@ if(isset($_SESSION['conn'])){
 					}
 				}
 				// Cŕiação do número de páginas
-				$qtd_page = (int)$countSelect/(int)$qtd;
-				if(((int)$countSelec % (int)$qtd) > 0){
-					$qtd_page += 1;
+				if( ($countSelect%$qtd) === 0){
+					$navigation_variables['qtdPage'] = (int)$countSelect/(int)$qtd;
+				}else{
+					$navigation_variables['qtdPage'] = intdiv($countSelect, $qtd) + (int)1;
 				}
 				//
 				if($qtd >= $countSelect){

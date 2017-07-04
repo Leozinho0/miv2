@@ -1,3 +1,7 @@
+select option{
+	display: block !important;
+}
+
 .pc_ms_right{
 	min-width: 500px;
 	overflow-x: auto;
@@ -25,14 +29,16 @@
 .pc_default_container_navigation{
 	text-align: center;
 }
-.pc_default_container_navigation > div{
+.pc_default_container_navigation *{
 	display: inline-block;
-	width: 32%;
+	vertical-align: middle;
 }
 .pc_default_container_navigation > div:first-child{
+	float: left;
 	text-align: left;
 }
 .pc_default_container_navigation > div:last-child{
+	float: right;
 	text-align: right;
 }
 .pc_default_container_title{
@@ -106,4 +112,15 @@
 .navig_enabled{
 	pointer-events: all;
 	opacity: 1;
+}
+#navigate_qtdPage{
+	white-space: nowrap;
+	overflow: hidden;
+	max-width: 200px;
+	font-weight: bolder;
+	font-size: 1.1em;
+}
+#navigate_qtdPage a{
+	text-decoration: none;
+	color: lightslategrey;
 }
