@@ -276,8 +276,9 @@ function pc_tableSelectQuery(obj, navig){
 			var navig_qtdPage_html = "&ensp;";
 
 			//APAGAR - MONTAGEM DA QUANTIDADE DE PÁGINAS
-			for(var i = 1; i <= navigation_variables.qtdPage; i++){
-				navig_qtdPage_html += "<a href=''>" + i + "</a>" + "&ensp;";
+			//8 é a qt máxima q eu quero exibir no span 3 meio 3
+			for(var i = 1; i <= 7; i++){
+				navig_qtdPage_html += "<a href=''>" + i + "</a>";
 			}
 			$('#navigate_qtdPage').html(navig_qtdPage_html);
 			//
@@ -350,7 +351,24 @@ function mi_navigate(navig){
 			console.log(count_variables);
 			var count_html = "[" + count_variables.from + " - " + count_variables.to + " de " + count_variables.of + "]";
 
+
+			navigation_variables.qtdPage;
 			console.log("Ultimo limit " + debug_variables);
+
+			//Montar a navegação da pagina atual
+			var pagina_atual = count_variables.to/limit;
+			console.log("pagina atual " + pagina_atual);
+
+			/* PAREI AQUI!
+			if(pagina_atual > 4){
+				for(var i = 1; i <= 7; i++){
+					navig_qtdPage_html += "<a href=''>" + i + "</a>";
+				}
+				$('#navigate_qtdPage').html(navig_qtdPage_html);
+			}/*
+			if(navigation_variables.qtdPage > 7 & lala[3] > 4){
+
+			}*/
 
 			$("#conn_currentTable").html(table);
 			if(ds.length > 0){

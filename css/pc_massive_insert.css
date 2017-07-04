@@ -123,4 +123,5 @@ select option{
 #navigate_qtdPage a{
 	text-decoration: none;
 	color: lightslategrey;
+	padding: 8px;
 }
