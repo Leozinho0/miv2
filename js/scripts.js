@@ -327,24 +327,15 @@ function mi_navigate(navig){
 	//Final: 2
 	//Primeira: -2
 
-	//First Page
-	if(navig === 1){
-		var numPage_atual = document.getElementsByClassName('navigate_numPage_atual')[0];
-		$(numPage_atual).removeClass('navigate_numPage_atual').addClass('navigate_numPage');
-		$(numPage_atual).next().removeClass("navigate_numPage").addClass('navigate_numPage_atual');
-	}else if(navig === -1){
-		var numPage_atual = document.getElementsByClassName('navigate_numPage_atual')[0];
-		$(numPage_atual).removeClass('navigate_numPage_atual').addClass('navigate_numPage');
-		$(numPage_atual).prev().removeClass("navigate_numPage").addClass('navigate_numPage_atual');
-	}
+	//Travar navegação
+	var elemento_parent = $('.pc_default_container_navigation')[0];
+	travarNavegação(elemento_parent, 1);
+	//
+
+	//FirstPage
 	if(navig === -2){
 		pc_tableSelectQuery();
 		return;
-	}
-
-	//Last Page
-	if(navig === 2){
-
 	}
 
 	var database = document.getElementById("conn_currentBase").innerText;
@@ -356,7 +347,6 @@ function mi_navigate(navig){
 		type: 'POST',
 		data: 'address=127.0.0.1' + '&base=' + database + '&table=' + table + '&limit=' + limit + '&navig=' + navig + '&id=10',
 		success: function(ds){
-			console.log(ds);
 
 			var arr_retorno = JSON.parse(ds);
 			var html = arr_retorno[0];
@@ -370,17 +360,31 @@ function mi_navigate(navig){
 			console.log("Ultimo limit " + debug_variables);
 
 			//Montar a navegação da pagina atual
+			//Tá uma loucura esse código - AMADOR
+			//Garanto que qualquer um reduz isso a 5 linhas
 			var pagina_atual = count_variables.to/limit;
-
-			if(pagina_atual > 4 && ((pagina_atual+4) < navigation_variables.qtdPage) && navigation_variables.qtdPage > 7){
-				console.log("papai");
-
+			console.log(pagina_atual);
+			if(pagina_atual > 4 && ((pagina_atual+2) < navigation_variables.qtdPage) && navigation_variables.qtdPage > 7){
 				for(var i = -3; i <= 3; i++){
-					navig_qtdPage_html += "<a href=''>" + (pagina_atual+i) + "</a>";
+					if(i == -1){
+						navig_qtdPage_html += "<a href='' class='navigate_numPage_atual'>" + (pagina_atual+i) + "</a>";
+					}else{
+						navig_qtdPage_html += "<a href=''>" + (pagina_atual+i) + "</a>";
+					}			
 				}
-				console.log(navig_qtdPage_html);
 				$('#navigate_qtdPage').html(navig_qtdPage_html);
 			}
+			//Navegarção do numero de paginas
+			if(navig === 1){
+				var numPage_atual = document.getElementsByClassName('navigate_numPage_atual')[0];
+				$(numPage_atual).removeClass('navigate_numPage_atual').addClass('navigate_numPage');
+				$(numPage_atual).next().removeClass("navigate_numPage").addClass('navigate_numPage_atual');
+			}else if(navig === -1){
+				var numPage_atual = document.getElementsByClassName('navigate_numPage_atual')[0];
+				$(numPage_atual).removeClass('navigate_numPage_atual').addClass('navigate_numPage');
+				$(numPage_atual).prev().removeClass("navigate_numPage").addClass('navigate_numPage_atual');
+			}
+			//
 
 			$("#conn_currentTable").html(table);
 			if(ds.length > 0){
@@ -397,9 +401,23 @@ function mi_navigate(navig){
 				alert("vazio");
 
 			}
+			//Destravar navegaçao do span dos numeros das páginas
+			var elemento_parent = $('#navigate_qtdPage');
+			travarNavegação(elemento_parent, 0);
 		}
 	});
-
+}
+//
+function travarNavegação(elemento_parent, opcao){
+	//opcao 1 - trava
+	//opcao 0 - destrava
+	if(opcao === 1){
+		$(elemento_parent).find("a").removeClass('navig_enabled').addClass('navig_disabled');
+		//$(elemento_parent).find("a").css("pointer-events", "none");
+	}else if(opcao === 0){
+		//$(elemento_parent).find("a").css("pointer-events", "all" );
+		$(elemento_parent).find("a").removeClass('navig_disabled').addClass('navig_enabled');
+	}
 }
 //
 function mi_table_navigToggle(navigPos){
