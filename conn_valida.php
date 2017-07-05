@@ -118,7 +118,7 @@ if(isset($_SESSION['conn'])){
 				if( ($countSelect%$qtd) === 0){
 					$navigation_variables['qtdPage'] = (int)$countSelect/(int)$qtd;
 				}else{
-					$navigation_variables['qtdPage'] = intdiv($countSelect, $qtd) + (int)1;
+					$navigation_variables['qtdPage'] = floor($countSelect/$qtd) + (int)1;
 				}
 				//
 				if($qtd >= $countSelect){
@@ -225,7 +225,7 @@ if(isset($_SESSION['conn'])){
 				$qtd = $_POST['limit'];
 				$qtd_init = $_POST['limit'];
 				$navig = $_POST['navig'];
-				$navigation_variables = array('firstPage' => false, 'lastPage' => false);
+				$navigation_variables = array('firstPage' => false, 'lastPage' => false, 'qtdPage' => (int)0);
 				$count_variables = array('from' => '0', 'to' => '0', 'of' => '0');
 				$countSelect = "";
 				$res_fields = "";
@@ -239,6 +239,14 @@ if(isset($_SESSION['conn'])){
 						$countSelect = $key2;
 					}
 				}
+
+				// Cŕiação do número de páginas
+				if( ($countSelect%$qtd) === 0){
+					$navigation_variables['qtdPage'] = (int)$countSelect/(int)$qtd;
+				}else{
+					$navigation_variables['qtdPage'] = floor($countSelect/$qtd) + (int)1;
+				}
+				//
 
 				//Checa navegação...
 				if(isset($_SESSION['conn'][$_POST['address']]['tableNavigLastLimit'])){

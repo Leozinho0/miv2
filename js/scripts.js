@@ -276,9 +276,15 @@ function pc_tableSelectQuery(obj, navig){
 			var navig_qtdPage_html = "&ensp;";
 
 			//APAGAR - MONTAGEM DA QUANTIDADE DE PÁGINAS
-			//8 é a qt máxima q eu quero exibir no span 3 meio 3
-			for(var i = 1; i <= 7; i++){
-				navig_qtdPage_html += "<a href=''>" + i + "</a>";
+			//7 é a qt máxima q eu quero exibir no span 3 1 3
+			for(var i = 1; i <= navigation_variables.qtdPage; i++){
+				if(i <= 7){
+					if(i == 1){
+						navig_qtdPage_html += "<a href='' class='navigate_numPage_atual'>" + i + "</a>";
+					}else{
+						navig_qtdPage_html += "<a href='' class='navigate_numPage'>" + i + "</a>";
+					}
+				}
 			}
 			$('#navigate_qtdPage').html(navig_qtdPage_html);
 			//
@@ -322,6 +328,15 @@ function mi_navigate(navig){
 	//Primeira: -2
 
 	//First Page
+	if(navig === 1){
+		var numPage_atual = document.getElementsByClassName('navigate_numPage_atual')[0];
+		$(numPage_atual).removeClass('navigate_numPage_atual').addClass('navigate_numPage');
+		$(numPage_atual).next().removeClass("navigate_numPage").addClass('navigate_numPage_atual');
+	}else if(navig === -1){
+		var numPage_atual = document.getElementsByClassName('navigate_numPage_atual')[0];
+		$(numPage_atual).removeClass('navigate_numPage_atual').addClass('navigate_numPage');
+		$(numPage_atual).prev().removeClass("navigate_numPage").addClass('navigate_numPage_atual');
+	}
 	if(navig === -2){
 		pc_tableSelectQuery();
 		return;
@@ -346,29 +361,26 @@ function mi_navigate(navig){
 			var arr_retorno = JSON.parse(ds);
 			var html = arr_retorno[0];
 			var navigation_variables = JSON.parse(arr_retorno[1]);
+			var navig_qtdPage_html = "";
 			var debug_variables = JSON.parse(arr_retorno[2]);
 			var count_variables = JSON.parse(arr_retorno[3]);
 			console.log(count_variables);
 			var count_html = "[" + count_variables.from + " - " + count_variables.to + " de " + count_variables.of + "]";
 
-
-			navigation_variables.qtdPage;
 			console.log("Ultimo limit " + debug_variables);
 
 			//Montar a navegação da pagina atual
 			var pagina_atual = count_variables.to/limit;
-			console.log("pagina atual " + pagina_atual);
 
-			/* PAREI AQUI!
-			if(pagina_atual > 4){
-				for(var i = 1; i <= 7; i++){
-					navig_qtdPage_html += "<a href=''>" + i + "</a>";
+			if(pagina_atual > 4 && ((pagina_atual+4) < navigation_variables.qtdPage) && navigation_variables.qtdPage > 7){
+				console.log("papai");
+
+				for(var i = -3; i <= 3; i++){
+					navig_qtdPage_html += "<a href=''>" + (pagina_atual+i) + "</a>";
 				}
+				console.log(navig_qtdPage_html);
 				$('#navigate_qtdPage').html(navig_qtdPage_html);
-			}/*
-			if(navigation_variables.qtdPage > 7 & lala[3] > 4){
-
-			}*/
+			}
 
 			$("#conn_currentTable").html(table);
 			if(ds.length > 0){
