@@ -364,16 +364,46 @@ function mi_navigate(navig){
 			//Garanto que qualquer um reduz isso a 5 linhas
 			var pagina_atual = count_variables.to/limit;
 			console.log(pagina_atual);
-			if(pagina_atual > 4 && ((pagina_atual+2) < navigation_variables.qtdPage) && navigation_variables.qtdPage > 7){
+
+			//Movimento da barra de n. da pagina
+			if(pagina_atual >= 4 && ((pagina_atual+2) < navigation_variables.qtdPage) && navigation_variables.qtdPage > 7){
 				for(var i = -3; i <= 3; i++){
-					if(i == -1){
+					//
+					var j = 0;
+					//Navega pra frente
+					if(navig === 1){
+						j = -1
+					}
+					//Navega pra trás
+					else if(navig === -1){
+						j = +1;
+					}
+					if(i == j){
 						navig_qtdPage_html += "<a href='' class='navigate_numPage_atual'>" + (pagina_atual+i) + "</a>";
 					}else{
 						navig_qtdPage_html += "<a href=''>" + (pagina_atual+i) + "</a>";
-					}			
+					}
+					//			
 				}
 				$('#navigate_qtdPage').html(navig_qtdPage_html);
 			}
+/*
+			//Movimento da barra de n. da pagina - TRÁS
+			else if(navig === -1){
+				console.log("pagina atual: " + pagina_atual)
+				if(pagina_atual >= 4 && ((pagina_atual+2) < navigation_variables.qtdPage) && navigation_variables.qtdPage > 7){
+					for(var i = -3; i <= 3; i++){
+						if(i == +1){
+							navig_qtdPage_html += "<a href='' class='navigate_numPage_atual'>" + (pagina_atual+i) + "</a>";
+						}else{
+							navig_qtdPage_html += "<a href=''>" + (pagina_atual+i) + "</a>";
+						}			
+					}
+					$('#navigate_qtdPage').html(navig_qtdPage_html);
+				}
+			}
+			*/
+			
 			//Navegarção do numero de paginas
 			if(navig === 1){
 				var numPage_atual = document.getElementsByClassName('navigate_numPage_atual')[0];
