@@ -362,7 +362,12 @@ function mi_navigate(navig){
 			//Montar a navegação da pagina atual
 			//Tá uma loucura esse código - AMADOR
 			//Garanto que qualquer um reduz isso a 5 linhas
-			var pagina_atual = count_variables.to/limit;
+			var pagina_atual = 0;
+			if((count_variables.to % limit) > 0){
+				pagina_atual = Math.floor((count_variables.to/limit)) +1;
+			}else{
+				pagina_atual = count_variables.to/limit;
+			}
 			console.log(pagina_atual);
 
 			//Movimento da barra de n. da pagina
@@ -386,24 +391,20 @@ function mi_navigate(navig){
 					//			
 				}
 				$('#navigate_qtdPage').html(navig_qtdPage_html);
-			}
-/*
-			//Movimento da barra de n. da pagina - TRÁS
-			else if(navig === -1){
-				console.log("pagina atual: " + pagina_atual)
-				if(pagina_atual >= 4 && ((pagina_atual+2) < navigation_variables.qtdPage) && navigation_variables.qtdPage > 7){
-					for(var i = -3; i <= 3; i++){
-						if(i == +1){
-							navig_qtdPage_html += "<a href='' class='navigate_numPage_atual'>" + (pagina_atual+i) + "</a>";
-						}else{
+			}else if(navig === 2){
+				for(var i = -6; i <= 0; i++){
+					//
+					if(i == 0){
+						navig_qtdPage_html += "<a href='' class='navigate_numPage_atual'>" + (pagina_atual) + "</a>";
+					}else{
+						if(pagina_atual+i > 0){
 							navig_qtdPage_html += "<a href=''>" + (pagina_atual+i) + "</a>";
-						}			
+						}
 					}
-					$('#navigate_qtdPage').html(navig_qtdPage_html);
+					//			
 				}
+				$('#navigate_qtdPage').html(navig_qtdPage_html);
 			}
-			*/
-			
 			//Navegarção do numero de paginas
 			if(navig === 1){
 				var numPage_atual = document.getElementsByClassName('navigate_numPage_atual')[0];

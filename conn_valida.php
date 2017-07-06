@@ -283,7 +283,11 @@ if(isset($_SESSION['conn'])){
 				}
 				//Setting the count variables
 				$count_variables['from'] = ($qtd[0] + 1);
-				$count_variables['to'] = ($qtd[0] + $qtd_init);
+				if(($qtd[0] + $qtd_init) > $countSelect){
+					$count_variables['to'] = $countSelect;
+				}else{
+					$count_variables['to'] = ($qtd[0] + $qtd_init);
+				}
 				$count_variables['of'] = $countSelect;
 
 				$output = "<table>";
