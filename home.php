@@ -254,7 +254,7 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
                 <div id="header_right_container_utoolbar">
                     <div class="toolbar_collapse" style="float: left; padding: 0 5px;">
                         <a href="#" onclick="div_RightToLeftCollapse('#teste_leo');">
-                            <img src="img/pmahomme/img/bd_prevpage.png" alt="">
+                            <img src="img/pmahomme/img/dp_leftContainerCollapse_icon.png" alt="">
                         </a>
                     </div>
                     <div>
@@ -315,6 +315,9 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
             </div>
             
         </div>
+        <script>
+            window.load= load_dashboard();
+        </script>
     </body>
     </html>
     <?php

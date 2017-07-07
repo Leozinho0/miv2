@@ -122,9 +122,12 @@ select option{
 }
 #navigate_qtdPage a{
 	text-decoration: none;
-	//color: lightslategrey;
+	pointer-events: none;
 	padding: 5px;
 }
 .navigate_numPage_atual{
 	color: coral;
+}
+.navigate_numPage{
+	color: lightslategrey;
 }

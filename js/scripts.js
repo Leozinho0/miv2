@@ -1,3 +1,16 @@
+//Test - Loading dashboard content
+function load_dashboard(){
+	alert('Pagina carregada');
+}
+
+
+
+
+
+
+
+
+//
 function js_listBases(){
 	var d = 'sgbd=' + document.getElementById("conn_sgbd").value + '&adress=' + document.getElementById("conn_adress").value + '&user=' + document.getElementById("conn_user").value + '&password=' + document.getElementById("conn_password").value + "&id=2";
 	$.ajax({
@@ -273,7 +286,7 @@ function pc_tableSelectQuery(obj, navig){
 			var navigation_variables = JSON.parse(arr_retorno[1]);
 			var count_variables = JSON.parse(arr_retorno[2]);
 			var count_html = "[" + count_variables.from + " - " + count_variables.to + " de " + count_variables.of + "]";
-			var navig_qtdPage_html = "&ensp;";
+			var navig_qtdPage_html = "";
 
 			//APAGAR - MONTAGEM DA QUANTIDADE DE PÁGINAS
 			//7 é a qt máxima q eu quero exibir no span 3 1 3
@@ -386,19 +399,19 @@ function mi_navigate(navig){
 					if(i == j){
 						navig_qtdPage_html += "<a href='' class='navigate_numPage_atual'>" + (pagina_atual+i) + "</a>";
 					}else{
-						navig_qtdPage_html += "<a href=''>" + (pagina_atual+i) + "</a>";
+						navig_qtdPage_html += "<a href='' class='navigate_numPage'>" + (pagina_atual+i) + "</a>";
 					}
 					//			
 				}
 				$('#navigate_qtdPage').html(navig_qtdPage_html);
-			}else if(navig === 2){
+			}else if(navig === 2){ //ULTIMA PAGINA
 				for(var i = -6; i <= 0; i++){
 					//
 					if(i == 0){
 						navig_qtdPage_html += "<a href='' class='navigate_numPage_atual'>" + (pagina_atual) + "</a>";
 					}else{
 						if(pagina_atual+i > 0){
-							navig_qtdPage_html += "<a href=''>" + (pagina_atual+i) + "</a>";
+							navig_qtdPage_html += "<a href='' class='navigate_numPage'>" + (pagina_atual+i) + "</a>";
 						}
 					}
 					//			
@@ -475,3 +488,10 @@ function mi_table_navigToggle(navigPos){
 	}
 }
 //
+function mi_removeTable(table){
+	if(confirm('Remover tabela?')){
+		table.parentNode.remove();
+	}else{
+		return;
+	}
+}
