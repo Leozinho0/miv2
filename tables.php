@@ -1,14 +1,11 @@
 <?php
-
 ?>
 
- 
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
+<script>
+	(function(){
+		console.log('<?php echo "leandro"; ?>');
+	})();
+</script>
 
-</body>
-</html>
+<?php
+?>

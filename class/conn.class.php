@@ -1,5 +1,6 @@
 <?php
 ##
+##
 ##This classes creates a connection object of a SGBD type
 ##Paramentes passed: SGBD(mysql), address, user, password 
 ##
