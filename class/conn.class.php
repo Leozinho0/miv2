@@ -30,14 +30,15 @@ class Conn extends PDO{
 	##Complete
 	function __construct($sgbd, $address, $user, $pwd, $instance = 'XE'){
 		$this->connect($sgbd, $address, $user, $pwd, $instance);
-		$this->arr_ds_nomes = json_decode (file_get_contents("json/ds_nomes.json"));
-		$this->arr_ds_char = json_decode (file_get_contents("json/ds_char.json"));
-		$this->arr_ds_date = json_decode (file_get_contents("json/ds_date.json"));
-		$this->arr_ds_datetime = json_decode (file_get_contents("json/ds_datetime.json"));
-		$this->arr_ds_text = json_decode (file_get_contents("json/ds_text.json"));
-		$this->arr_ds_time = json_decode (file_get_contents("json/ds_time.json"));
-		$this->arr_ds_timestamp = json_decode (file_get_contents("json/ds_timestamp.json"));
-		$this->arr_ds_year = json_decode (file_get_contents("json/ds_year.json"));
+		$this->arr_ds_nomes = json_decode (file_get_contents(__DIR__ ."/../json/ds_nomes.json"));
+		$this->arr_ds_char = json_decode (file_get_contents(__DIR__ ."/../json/ds_char.json"));
+		$this->arr_ds_date = json_decode (file_get_contents(__DIR__ ."/../json/ds_date.json"));
+		$this->arr_ds_datetime = json_decode (file_get_contents(__DIR__ ."/../json/ds_datetime.json"));
+		$this->arr_ds_text = json_decode (file_get_contents(__DIR__ ."/../json/ds_text.json"));
+		$this->arr_ds_time = json_decode (file_get_contents(__DIR__ ."/../json/ds_time.json"));
+		$this->arr_ds_timestamp = json_decode (file_get_contents(__DIR__ ."/../json/ds_timestamp.json"));
+		$this->arr_ds_year = json_decode (file_get_contents(__DIR__ ."/../json/ds_year.json"));
+		//echo "Dirname da classe: " . dirname(__FILE__);
 		//sintaxe para pegar echo $this->arr_ds_char[0]->value;
 	}
 ##Private functions
@@ -296,7 +297,7 @@ class Conn extends PDO{
 			}else if($type == 'int' || $type == 'smallint' || $type == 'mediumint' || $type == 'bigint'){
 				return rand(0, 9999);
 			}else if($type == 'float' || $type == 'double' || $type == 'decimal'){
-				return $this->f_rand(0, 999, 100);
+				return $this->f_rand(0, 99, 100);
 			}else{
 				$arr_retorno = array();
 				switch($type){

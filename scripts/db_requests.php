@@ -1,52 +1,8 @@
 <?php
-require_once 'class/conn.class.php';
+//Includes
+require_once '../class/conn.class.php';
 session_start();
-//
-##Tests if connection succeeds
-if(isset($_POST['id']) && $_POST['id'] == 1){
-	switch ($_POST['sgbd']) {
-		case 'mysql':
-			$conn = new Conn($_POST['sgbd'], $_POST['adress'], $_POST['user'], $_POST['password']);
-			if($conn->connStatus()){
-				$_SESSION['conn'][$_POST['adress']]['status'] = true;
-				$_SESSION['conn'][$_POST['adress']]['banco'] = $_POST['sgbd'];
-				$_SESSION['conn'][$_POST['adress']]['address'] = $_POST['adress'];
-				$_SESSION['conn'][$_POST['adress']]['usr'] = $_POST['user'];
-				$_SESSION['conn'][$_POST['adress']]['psw'] = $_POST['password'];
-				echo "y";
-			}else{
-				echo $conn->getError();
-			}
-			break;
-		case 'oracle':
-			$conn = new Conn($_POST['sgbd'], $_POST['adress'], $_POST['user'], $_POST['password']);
-			if($conn->connStatus()){
-				echo "y";
-			}else{
-				echo $conn->getError();
-			}
-			break;
-		case 'mssql':
-			echo "Ainda não configurado";
-			break;
-		case 'postgres':
-			$conn = new Conn($_POST['sgbd'], $_POST['adress'], $_POST['user'], $_POST['password']);
-			if($conn->connStatus()){
-				echo "y";
-			}else{
-				echo $conn->getError();
-			}
-			break;
-		case 'firebird':
-			echo "Ainda não configurado";
-			break;
-	}
-}
-###########
-//
-//
-//
-###########
+
 if(isset($_SESSION['conn'])){
 	//
 	//Show databases
@@ -330,6 +286,6 @@ if(isset($_SESSION['conn'])){
 }
 //Exit
 else{
-	//header('location: desconn_redir.php');
-}
+	header('location: desconn_redir.php');
+} 
 ?>
