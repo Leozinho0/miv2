@@ -42,6 +42,21 @@ if(isset($_POST['id']) && $_POST['id'] == 1){
 			break;
 	}
 }
+
+if(isset($_GET['id']) && $_GET['id'] == 100){
+	header('Content-Type: application/json');
+	$conn = new Conn("mysql", "127.0.0.1", "root", "rootroot");
+
+	$arr_databases = $conn->showDatabases('mysql');
+	$arr_retorno = array();
+
+	foreach($arr_databases as $key => $value){
+		$arr_retorno[$key]['id'] = "dbtree_" + $arr_databases[$key];
+		$arr_retorno[$key]['text'] = $arr_databases[$key];
+		$arr_retorno[$key]['children'] = true;
+	}
+	echo json_encode($arr_databases);
+}
 ###########
 //
 //
@@ -50,9 +65,18 @@ if(isset($_POST['id']) && $_POST['id'] == 1){
 if(isset($_SESSION['conn'])){
 	//
 	//Show databases
-	if(isset($_POST['id']) && $_POST['id'] == 2){
-				$conn = new Conn($_POST['sgbd'], $_POST['adress'], $_POST['user'], $_POST['password']);
-				echo json_encode($conn->showDatabases($_POST['sgbd']));
+	if(isset($_GET['id']) && $_GET['id'] == 2){
+				$conn = new Conn("mysql", "127.0.0.1", "root", "rootroot");
+
+				$arr_databases = $conn->showDatabases('mysql');
+				$arr_retorno = array();
+
+				foreach($arr_databases as $key => $value){
+					$arr_retorno[$key]['id'] = "dbtree_" + $arr_databases[$key];
+					$arr_retorno[$key]['text'] = $arr_databases[$key];
+					$arr_retorno[$key]['children'] = true;
+				}
+				echo json_encode($arr_databases);
 	}
 	//
 	//Show tables

@@ -4,7 +4,47 @@ function load_dashboard(){
 }
 
 
+function tree_databases(obj_databases){
+	//var d = "conn_valida.php&" + 'sgbd=' + document.getElementById("conn_sgbd").value + '&adress=' + document.getElementById("conn_adress").value + '&user=' + document.getElementById("conn_user").value + '&password=' + document.getElementById("conn_password").value + "&id=2";
+	
+	for(var i = 0; i < obj_databases.length; i++){
+		obj_databases[i].id = 'treedb_' + obj_databases[i].Database;
+		obj_databases[i].text = obj_databases[i].Database;
+		obj_databases[i].children = false;
+	}
 
+	/*
+
+	console.log(obj_databases);
+
+	$(function() {
+	  $('#body_left_container').jstree({
+	    'core' : {
+	      'data' : obj_databases
+	    }
+	  });
+	});
+	
+  $('#body_left_container').on("ready.jstree", function(){
+  	for(var i = 0; i < obj_databases.length; i++){
+  		$('#treedb_' + obj_databases[i].Database).click( function(){
+  			console.log(this);
+  			this.
+  		});
+	}
+
+  });*/
+$(function() {
+	  $('#body_left_container').jstree({
+	    'core' : {
+	      'data' : {
+	      	'url' : "conn_valida.php?id=100",
+	      	'data' : ''
+	      }
+	    }
+	  });
+	});
+}
 
 
 

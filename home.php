@@ -185,12 +185,20 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
             .database_ul li:hover{
                 background-color: #D1D5D8;
             }
+            .footer{
+                width: 100%;
+                background-color: grey;
+            }
         </style>
         <link rel="stylesheet" href="css/pc_sql.css">
         <link rel="stylesheet" href="css/pc_massive_insert.css">
 
         <script src="js/jquery.js"></script>
         <script src="js/scripts.js"></script>
+
+        <!-- JsTree -->
+        <link rel="stylesheet" href="third/jstree-master/src/themes/default/style.css" />
+        <script src="third/jstree-master/src/jstree.js"></script>
     </head>
     <body>
         <div class="ajax_main_loading">
@@ -242,7 +250,10 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
                 </div>
             </div>
             <div id="body_left_container">
-                <?php html_databases($arr_databases); ?>
+                <script>
+                    obj_databases = JSON.parse('<?php echo json_encode($arr_databases); ?>');
+                    tree_databases(obj_databases);
+                </script>>
             </div>
         </div>
         <!-- DRAG BAR TEST -->
@@ -313,11 +324,12 @@ if(isset($_SESSION['conn'][$_GET['address']]['status']) && $_SESSION['conn'][$_G
             <!-- dá um include no arquivo que dá include nas telas da app com display none -->
             <div id="body_right_container">
             </div>
+            <div class="footer">
+                FOOTER
+            </div>
             
         </div>
-        <script>
-            window.load= load_dashboard();
-        </script>
+
     </body>
     </html>
     <?php
