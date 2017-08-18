@@ -38,8 +38,10 @@ $(function() {
 	  $('#body_left_container').jstree({
 	    'core' : {
 	      'data' : {
-	      	'url' : "conn_valida.php?id=100",
-	      	'data' : ''
+	      	'url' : "conn_valida.php?db_tree=yes",
+	      	'data' : function (node){
+		     	return { 'id' : node.id };
+		    }
 	      }
 	    }
 	  });

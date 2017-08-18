@@ -43,20 +43,46 @@ if(isset($_POST['id']) && $_POST['id'] == 1){
 	}
 }
 
-if(isset($_GET['id']) && $_GET['id'] == 100){
-	header('Content-Type: application/json');
+##
+##JsTree json output - Database list
+##
+
+if(isset($_GET['db_tree']) && $_GET['db_tree'] == 'yes' && isset($_GET['id']) && $_GET['id'] == '#'){
+	//Parâmetros fixos - consertar
 	$conn = new Conn("mysql", "127.0.0.1", "root", "rootroot");
 
 	$arr_databases = $conn->showDatabases('mysql');
 	$arr_retorno = array();
 
+	
 	foreach($arr_databases as $key => $value){
-		$arr_retorno[$key]['id'] = "dbtree_" + $arr_databases[$key];
-		$arr_retorno[$key]['text'] = $arr_databases[$key];
+		$arr_retorno[$key]['id'] = "dbtree_" . $arr_databases[$key]['Database'];
+		$arr_retorno[$key]['text'] = $arr_databases[$key]['Database'];
 		$arr_retorno[$key]['children'] = true;
 	}
-	echo json_encode($arr_databases);
+
+	header('Content-Type: application/json');
+	echo json_encode($arr_retorno);
+
 }
+if(isset($_GET['db_tree']) && $_GET['db_tree'] == 'yes' && isset($_GET['id']) && $_GET['id'] != '#'){
+	//echo '[{"id":1,"text":"Root node","children":[{"id":2,"text":"Child node 1","children":true},{"id":3,"text":"Child node 2"}]}]';
+	$conn = new Conn("mysql", "127.0.0.1", "root", "rootroot");
+	$database = substr($_GET['id'], 7);
+	if($conn->useDatabase($database)){
+		$arr_tables = $conn->showTables();
+		$arr_retorno = array();
+
+		foreach($arr_tables as $key => $value){
+			//$arr_retorno[$key]['id'] = "dbtree_" . $arr_databases[$key]['Database'];
+			$arr_retorno[$key]['text'] = $arr_tables[$key][0];
+			$arr_retorno[$key]['children'] = false;
+		}
+		header('Content-Type: application/json');
+		echo json_encode($arr_retorno);
+	}
+}
+
 ###########
 //
 //
