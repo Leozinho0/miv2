@@ -304,8 +304,10 @@ function pc_tableSelectQuery(obj, navig){
 
 			$("#conn_currentTable").html(table);
 			if(ds.length > 0){
+
+					console.log(count_variables);
 				$('#pc_mi_table').html(html);
-				if(count_variables.of === 0){
+				if(count_variables.of == 0){
 					//Cuspir os erros no select da tabela ou
 					// mensagem de sem registro aqui nessa div
 					var empty_table = "<div>Sem registros</div>";
