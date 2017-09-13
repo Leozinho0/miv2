@@ -328,8 +328,4 @@ if(isset($_SESSION['conn'])){
 			}
 	}
 }
-//Exit
-else{
-	header('location: desconn_redir.php');
-}
 ?>

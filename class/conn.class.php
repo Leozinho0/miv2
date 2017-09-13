@@ -208,10 +208,12 @@ class Conn extends PDO{
 
 		$foreign_column_position = array();
 
+		f_log_insert($arr_foreignkey_retorno);
 		for($i = 0; $i < count($arr_foreignkey_retorno); $i++){
 			$pos = 0;
 			foreach($arr as $key){
-				if($arr_foreignkey_retorno[$i]["REFERENCED_TABLE_NAME"] === $key["Field"]){
+				f_log_insert($key["Field"]);
+				if($arr_foreignkey_retorno[$i]["COLUMN_NAME"] === $key["Field"]){
 					$foreign_column_position[] = $pos;
 				}
 				$pos++;
@@ -220,6 +222,7 @@ class Conn extends PDO{
 		}
 		$values = explode(",", $values);
 		
+		f_log_insert($foreign_column_position);
 		for($i = 0; $i < count($foreign_column_position); $i++){
 			$values[$foreign_column_position[$i]] = implode($arr_foreign_columns_values[$i]);
 		}
@@ -252,7 +255,7 @@ class Conn extends PDO{
 				$arr_retorno[] = $sql."<br>";
 			}else if($error[0] == "23000"){
 				//$tabela_fk = $this->checkForeignTable($table);
-				//Remover isso aqui
+				//Remover isso daqui, pegar do INFORMATION SCHEMA
 				$pos1 = strpos($error[2], 'REFERENCES `');
 				$pos1 = $pos1 + 12;
 				$pos2 = strpos($error[2], "` (");
@@ -260,6 +263,7 @@ class Conn extends PDO{
 				$tabela_fk = substr($error[2] , $pos1, - $pos3);
 
 				$sql_foreign = "SELECT TABLE_NAME, COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_SCHEMA = '" . "teste" . "' AND TABLE_NAME = '" . "$table" . "'";
+
 
 				//echo $tabela_fk;
 				/*
@@ -269,12 +273,13 @@ class Conn extends PDO{
 
 				//Variável que vai gravar coluna e valor a ser inserido na tabela com chave estrangeira
 				$arr_foreign_columns_values = array();
-				f_log_insert($arr_foreignkey_retorno);
 
 				$qtd_foreign = count($arr_foreignkey_retorno);
 				for($i = 0; $i < $qtd_foreign; $i++){
 					$sql = "SELECT " . $arr_foreignkey_retorno[$i]["REFERENCED_COLUMN_NAME"] . " FROM " . $arr_foreignkey_retorno[$i]["REFERENCED_TABLE_NAME"] . " ORDER BY rand() LIMIT 1";
 					$foreign_select = $this->select($sql);
+
+					
 
 					$arr_foreign_columns_values[][$arr_foreignkey_retorno[$i]["REFERENCED_TABLE_NAME"]] = implode($foreign_select[0]);
 
