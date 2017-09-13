@@ -1,4 +1,5 @@
 <?php
+require_once ('f_log.php');
 ##
 ##
 ##This classes creates a connection object of a SGBD type
@@ -200,6 +201,34 @@ class Conn extends PDO{
 		}
 		return $arr_retorno;
 	}
+	private function foreign_insert($table, $arr_foreignkey_retorno, $arr_foreign_columns_values){
+		$arr = $this->describeTable($table);
+		$values = $this->generateRandomInsert($table ,$arr);
+		//f_log_insert($arr_foreignkey_retorno);
+
+		$foreign_column_position = array();
+
+		for($i = 0; $i < count($arr_foreignkey_retorno); $i++){
+			$pos = 0;
+			foreach($arr as $key){
+				if($arr_foreignkey_retorno[$i]["REFERENCED_TABLE_NAME"] === $key["Field"]){
+					$foreign_column_position[] = $pos;
+				}
+				$pos++;
+			}
+			//var_dump($foreign_column_position[$arr_foreignkey_retorno[$i]["REFERENCED_TABLE_NAME"]]);
+		}
+		$values = explode(",", $values);
+		
+		for($i = 0; $i < count($foreign_column_position); $i++){
+			$values[$foreign_column_position[$i]] = implode($arr_foreign_columns_values[$i]);
+		}
+		$values = implode(", ", $values);
+		$sql = "INSERT INTO " . $table . " values (" . $values . ")";
+		$this->conn_obj->query($sql);
+		var_dump($sql);
+
+	}
 
 	public function massiveInsert($table, $qtd=1){
 		$arr = $this->describeTable($table);
@@ -217,18 +246,62 @@ class Conn extends PDO{
 			//Caso não exista erro, retorna UM ARRAY com os inserts a partir do [1] (o [0] tbm é pra verificar no Javascript.);
 			//OBS.: A função errorInfo() retorna um array.
 			$error = $this->conn_obj->errorInfo();
+			//Corrigir isso aqui. Ta verificando o codigo de erro errado
 			if($error[0] == "00000"){
 				$arr_retorno[0] = '';
 				$arr_retorno[] = $sql."<br>";
 			}else if($error[0] == "23000"){
 				//$tabela_fk = $this->checkForeignTable($table);
+				//Remover isso aqui
 				$pos1 = strpos($error[2], 'REFERENCES `');
 				$pos1 = $pos1 + 12;
-				$tabela_fk = substr($error[2] , $pos1, -9);
+				$pos2 = strpos($error[2], "` (");
+				$pos3 = strlen($error[2]) - $pos2;
+				$tabela_fk = substr($error[2] , $pos1, - $pos3);
+
+				$sql_foreign = "SELECT TABLE_NAME, COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_SCHEMA = '" . "teste" . "' AND TABLE_NAME = '" . "$table" . "'";
+
 				//echo $tabela_fk;
+				/*
+				//SELECT NA TABELA ESTRANGEIRA
+				$foreignkey_select = "SELECT * FROM " . $tabela_fk . " ORDER BY rand() LIMIT 1"; */
+				$arr_foreignkey_retorno = $this->select($sql_foreign);
+
+				//Variável que vai gravar coluna e valor a ser inserido na tabela com chave estrangeira
+				$arr_foreign_columns_values = array();
+				f_log_insert($arr_foreignkey_retorno);
+
+				$qtd_foreign = count($arr_foreignkey_retorno);
+				for($i = 0; $i < $qtd_foreign; $i++){
+					$sql = "SELECT " . $arr_foreignkey_retorno[$i]["REFERENCED_COLUMN_NAME"] . " FROM " . $arr_foreignkey_retorno[$i]["REFERENCED_TABLE_NAME"] . " ORDER BY rand() LIMIT 1";
+					$foreign_select = $this->select($sql);
+
+					$arr_foreign_columns_values[][$arr_foreignkey_retorno[$i]["REFERENCED_TABLE_NAME"]] = implode($foreign_select[0]);
+
+				}
+				$this->foreign_insert($table, $arr_foreignkey_retorno, $arr_foreign_columns_values);
+				return;
+				
+				/*
+				//checka se tabela estrangeira tá vazia, se estiver, popula ela e retorna os dados
+				if(count($arr_foreignkey_retorno) === 0){
+					$this->massiveInsert($tabela_fk, 10);
+
+					echo implode($arr_foreignkey_retorno);
+				}else{
+					$foreignkey_select = "SELECT * FROM " . $tabela_fk . " ORDER BY rand() LIMIT 1";
+					$arr_foreignkey_retorno = $this->select($foreignkey_select);
+
+					//$sql = "INSERT INTO {$table} VALUES({$values});";
+
+					$arr_foreignkey_retorno = implode($arr_foreignkey_retorno);
+					//echo "aaaa";
+
+				}*/
+
 
 				$arr_retorno[0] = "ERRO!<br>";
-				$arr_retorno[1] = "Tabela com chave estrangeira!<br>Popular tabela {$tabela_fk} primeiro!<br>";
+				$arr_retorno[1] = "Tabela com chave estrangeira!<br>Popular tabela {$table} primeiro!<br>";
 				//$arr_retorno[] = $error;
 			}else{
 				$arr_retorno[0] = 'ERRO!<br>';
@@ -237,6 +310,7 @@ class Conn extends PDO{
 		}
 		echo json_encode($arr_retorno);
 	}
+
 	##Queries Functions
 
 	private function describeTable($table){
@@ -454,4 +528,22 @@ switch ($_POST['sgbd']) {
 	}
 
 	*/
+
+
+
+
+
+
+/*
+
+Query get all foreign
+
+SELECT TABLE_NAME, COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_SCHEMA = 'teste';
+
+
+Criar LOG
+
+PHP function debug_backtrace();
+
+*/
 ?>
