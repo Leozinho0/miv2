@@ -216,7 +216,7 @@ function load_page_content(id_load, database, table){
 
 	$.ajax({
 		url: 'page_content_loader.php',
-		type: 'GET',
+		type: 'POST',
 		data: 'pc_load=' + id_load + '&database=' + database + '&table=' + tableName,
 		success: function(ds){
 			$('#body_right_container').html(ds);

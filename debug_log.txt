@@ -1,117 +1,32 @@
 array (
-  0 => 
-  array (
-    'TABLE_NAME' => 'pedido_itens',
-    'COLUMN_NAME' => 'id_pedido',
-    'CONSTRAINT_NAME' => 'pedido_itens_ibfk_1',
-    'REFERENCED_TABLE_NAME' => 'pedido',
-    'REFERENCED_COLUMN_NAME' => 'num_ped',
-  ),
 )
-'pedido'
-'pedido'
-'pedido'
-'pedido'
 array (
 )
 array (
-  0 => 
-  array (
-    'TABLE_NAME' => 'pedido_itens',
-    'COLUMN_NAME' => 'id_pedido',
-    'CONSTRAINT_NAME' => 'pedido_itens_ibfk_1',
-    'REFERENCED_TABLE_NAME' => 'pedido',
-    'REFERENCED_COLUMN_NAME' => 'num_ped',
-  ),
 )
-'id_item'
-'id_pedido'
-'nome_item'
-'valor_unit'
 array (
 )
 array (
-  0 => 
-  array (
-    'TABLE_NAME' => 'pedido_itens',
-    'COLUMN_NAME' => 'id_pedido',
-    'CONSTRAINT_NAME' => 'pedido_itens_ibfk_1',
-    'REFERENCED_TABLE_NAME' => 'pedido',
-    'REFERENCED_COLUMN_NAME' => 'num_ped',
-  ),
-)
-'id_item'
-'id_pedido'
-'nome_item'
-'valor_unit'
-array (
-  0 => 1,
 )
 array (
-  0 => 
-  array (
-    'TABLE_NAME' => 'pedido_itens',
-    'COLUMN_NAME' => 'id_pedido',
-    'CONSTRAINT_NAME' => 'pedido_itens_ibfk_1',
-    'REFERENCED_TABLE_NAME' => 'pedido',
-    'REFERENCED_COLUMN_NAME' => 'num_ped',
-  ),
-)
-'id_item'
-'id_pedido'
-'nome_item'
-'valor_unit'
-array (
-  0 => 1,
 )
 array (
-  0 => 
-  array (
-    'TABLE_NAME' => 'pedido_itens',
-    'COLUMN_NAME' => 'id_pedido',
-    'CONSTRAINT_NAME' => 'pedido_itens_ibfk_1',
-    'REFERENCED_TABLE_NAME' => 'pedido',
-    'REFERENCED_COLUMN_NAME' => 'num_ped',
-  ),
-)
-'id_item'
-'id_pedido'
-'nome_item'
-'valor_unit'
-array (
-  0 => 1,
 )
 array (
-  0 => 
-  array (
-    'TABLE_NAME' => 'pedido_itens',
-    'COLUMN_NAME' => 'id_pedido',
-    'CONSTRAINT_NAME' => 'pedido_itens_ibfk_1',
-    'REFERENCED_TABLE_NAME' => 'pedido',
-    'REFERENCED_COLUMN_NAME' => 'num_ped',
-  ),
-)
-'id_item'
-'id_pedido'
-'nome_item'
-'valor_unit'
-array (
-  0 => 1,
 )
 array (
-  0 => 
-  array (
-    'TABLE_NAME' => 'pedido_itens',
-    'COLUMN_NAME' => 'id_pedido',
-    'CONSTRAINT_NAME' => 'pedido_itens_ibfk_1',
-    'REFERENCED_TABLE_NAME' => 'pedido',
-    'REFERENCED_COLUMN_NAME' => 'num_ped',
-  ),
 )
-'id_item'
-'id_pedido'
-'nome_item'
-'valor_unit'
 array (
-  0 => 1,
+)
+array (
+)
+array (
+)
+array (
+)
+array (
+)
+array (
+)
+array (
 )
