@@ -208,11 +208,10 @@ class Conn extends PDO{
 
 		$foreign_column_position = array();
 
-		f_log_insert($arr_foreignkey_retorno);
+		
 		for($i = 0; $i < count($arr_foreignkey_retorno); $i++){
 			$pos = 0;
 			foreach($arr as $key){
-				f_log_insert($key["Field"]);
 				if($arr_foreignkey_retorno[$i]["COLUMN_NAME"] === $key["Field"]){
 					$foreign_column_position[] = $pos;
 				}
@@ -222,7 +221,7 @@ class Conn extends PDO{
 		}
 		$values = explode(",", $values);
 		
-		f_log_insert($foreign_column_position);
+		
 		for($i = 0; $i < count($foreign_column_position); $i++){
 			$values[$foreign_column_position[$i]] = implode($arr_foreign_columns_values[$i]);
 		}
@@ -237,7 +236,8 @@ class Conn extends PDO{
 		$arr = $this->describeTable($table);
 		//Declaração do array que vai retornar pro Javascript
 		$arr_retorno = array();
-		for($i = 0; $i < $qtd; $i++){
+		for($j = 0; $j < $qtd; $j++){
+			f_log_insert($j);
 			$values = $this->generateRandomInsert($table, $arr); //retorna string
 
 			$sql = "INSERT INTO {$table} VALUES({$values});";
@@ -279,13 +279,24 @@ class Conn extends PDO{
 					$sql = "SELECT " . $arr_foreignkey_retorno[$i]["REFERENCED_COLUMN_NAME"] . " FROM " . $arr_foreignkey_retorno[$i]["REFERENCED_TABLE_NAME"] . " ORDER BY rand() LIMIT 1";
 					$foreign_select = $this->select($sql);
 
-					
+					if(empty($foreign_select)){
+						//TESTE RECURSIVIDADE 1
+						if($this->massiveInsert($arr_foreignkey_retorno[$i]["REFERENCED_TABLE_NAME"])){
+							$this->massiveInsert($table);
+						}
+					}else{
+						$arr_foreign_columns_values[][$arr_foreignkey_retorno[$i]["REFERENCED_TABLE_NAME"]] = implode($foreign_select[0]);
+						for($l = 0; $l < $qtd; $l++){
+							$this->foreign_insert($table, $arr_foreignkey_retorno, $arr_foreign_columns_values);
+						}
+						//f_log_insert($foreign_select);
+						//f_log_insert($sql);
 
-					$arr_foreign_columns_values[][$arr_foreignkey_retorno[$i]["REFERENCED_TABLE_NAME"]] = implode($foreign_select[0]);
+					}
 
 				}
-				$this->foreign_insert($table, $arr_foreignkey_retorno, $arr_foreign_columns_values);
-				return;
+				//$this->foreign_insert($table, $arr_foreignkey_retorno, $arr_foreign_columns_values);
+				//return;
 				
 				/*
 				//checka se tabela estrangeira tá vazia, se estiver, popula ela e retorna os dados
@@ -314,6 +325,7 @@ class Conn extends PDO{
 			}
 		}
 		echo json_encode($arr_retorno);
+		return true;
 	}
 
 	##Queries Functions
