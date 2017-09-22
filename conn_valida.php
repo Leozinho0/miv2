@@ -74,7 +74,7 @@ if(isset($_SESSION['conn'])){
 			//foreach pra inserir em cada tabela
 			$table = explode(",", $_POST['table']);
 			foreach($table as $key){
-				$conn->massiveInsert($key, $_POST['qtd']);
+				$conn->massiveInsert($key, $_POST['qtd'], "", $_POST['base']);
 			}
 		}
 	}

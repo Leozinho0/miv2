@@ -222,7 +222,7 @@ class Conn extends PDO{
 		$values = explode(",", $values);
 		
 		
-		for($i = 0; $i < count($foreign_column_position); $i++){
+		for($i = 0; $i < count($arr_foreign_columns_values); $i++){
 			$values[$foreign_column_position[$i]] = implode($arr_foreign_columns_values[$i]);
 		}
 		$values = implode(", ", $values);
@@ -232,7 +232,7 @@ class Conn extends PDO{
 
 	}
 
-	public function massiveInsert($table, $qtd=1){
+	public function massiveInsert($table, $qtd=1, $recursividade = false, $database){
 		$arr = $this->describeTable($table);
 		//Declaração do array que vai retornar pro Javascript
 		$arr_retorno = array();
@@ -262,7 +262,7 @@ class Conn extends PDO{
 				$pos3 = strlen($error[2]) - $pos2;
 				$tabela_fk = substr($error[2] , $pos1, - $pos3);
 
-				$sql_foreign = "SELECT TABLE_NAME, COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_SCHEMA = '" . "teste" . "' AND TABLE_NAME = '" . "$table" . "'";
+				$sql_foreign = "SELECT TABLE_NAME, COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_SCHEMA = '" . $database . "' AND TABLE_NAME = '" . $table . "'";
 
 
 				//echo $tabela_fk;
@@ -281,14 +281,16 @@ class Conn extends PDO{
 
 					if(empty($foreign_select)){
 						//TESTE RECURSIVIDADE 1
-						if($this->massiveInsert($arr_foreignkey_retorno[$i]["REFERENCED_TABLE_NAME"])){
-							$this->massiveInsert($table);
+
+						$this->massiveInsert($arr_foreignkey_retorno[$i]["REFERENCED_TABLE_NAME"], $qtd, true, $database);
+						if(!$recursividade){
+							$this->massiveInsert($table, "", "", $database);
 						}
 					}else{
 						$arr_foreign_columns_values[][$arr_foreignkey_retorno[$i]["REFERENCED_TABLE_NAME"]] = implode($foreign_select[0]);
-						for($l = 0; $l < $qtd; $l++){
+						//for($l = 0; $l < $qtd; $l++){
 							$this->foreign_insert($table, $arr_foreignkey_retorno, $arr_foreign_columns_values);
-						}
+						//}
 						//f_log_insert($foreign_select);
 						//f_log_insert($sql);
 
@@ -317,7 +319,7 @@ class Conn extends PDO{
 
 
 				$arr_retorno[0] = "ERRO!<br>";
-				$arr_retorno[1] = "Tabela com chave estrangeira!<br>Popular tabela {$table} primeiro!<br>";
+				$arr_retorno[1] = "Tabela com chave estrangeira!<br>A tabela {$table} foi populada!<br>";
 				//$arr_retorno[] = $error;
 			}else{
 				$arr_retorno[0] = 'ERRO!<br>';
